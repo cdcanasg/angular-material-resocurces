@@ -47,7 +47,8 @@ require.config({
         'myAppResource': [base_cdn + '/app.resources'],
         'myAppServices': [base_cdn + '/app.services'],
         'deepmerge': [base_cdn + '/deepmerge'],
-        'prototypes':[base_cdn + '/prototypes']
+        'prototypes':[base_cdn + '/prototypes'],
+        'appApiConfig': [base_cdn + '/app.api.config']
     },shim:{
         'angular':['prototypes'],
         'deepmerge':['angular'],
