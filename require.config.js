@@ -1,4 +1,3 @@
-var global_app_owner = 'seneca';
 var base_cdn_version = 'master';
 var base_cdn = 'https://cdn.jsdelivr.net/gh/cdcanasg/angularjs-material-resources@' + base_cdn_version;
 var global_api_definition = {};
