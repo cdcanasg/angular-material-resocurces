@@ -1,5 +1,10 @@
 var base_cdn_version = 'master';
-var base_cdn = 'https://cdn.jsdelivr.net/gh/cdcanasg/angularjs-material-resources@' + base_cdn_version;
+if (window.location.host==localhost) {
+    var base_cdn = '/base';
+}else{
+    var base_cdn = 'https://cdn.jsdelivr.net/gh/cdcanasg/angularjs-material-resources@' + base_cdn_version;    
+}
+
 var global_api_definition = {};
 global_api_definition[global_app_owner] = {
     'auth':{
