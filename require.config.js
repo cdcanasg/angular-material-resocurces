@@ -22,7 +22,6 @@ moment.locale('es');
 require.config({
     baseUrl: 'static/' + global_app_owner + '/js',
     paths:{
-        'angularChart':['base/angular.chart'],
         'angular':['//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular'],
         'angularAnimate':['//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min'],
         'angularAria': ['//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min'],
@@ -38,6 +37,7 @@ require.config({
         'chartjs': ['//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min'],
         'firebase':['//www.gstatic.com/firebasejs/3.6.6/firebase'],
         'angularfire': ['//cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min'],
+        'angularChart':[base_cdn + '/angular.chart'],
         'ngFileUpload':[base_cdn + '/ng.file.upload'],
         'ngExportExcel': [base_cdn + '/ng.export.excel'],
         'angular.tinymce': [base_cdn + '/angular.tinymce'],
