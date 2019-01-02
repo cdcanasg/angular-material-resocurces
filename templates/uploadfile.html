@@ -1,0 +1,22 @@
+<div layout="column" layout-align="start center" flex>
+    <div layout="column" layout-align="center center" flex>
+        <div class="md-headline">Archivos cargados: {{files.length}}</div>
+        <div layout="row" layout-align="center center" flex>
+            <md-input-container flex>
+                <label>Listado de archivos</label>
+                <md-select ng-model="fileToDelete" >
+                    <md-option ng-value="key" ng-repeat="(key, value) in files">{{value.name}}</md-option>
+                </md-select>
+            </md-input-container>
+            <md-button class="md-icon-button material-icons" ng-click="deleteFile(fileToDelete)" ng-disabled="false" aria-label="description">
+                <md-tooltip md-direction="top">Borrar archivo</md-tooltip>
+                delete
+            </md-button>
+            <md-progress-circular md-mode="determinate" value="progress" md-diameter="30" ng-show="showProgress"></md-progress-circular>
+        </div>
+    </div>    
+    <div layout="column" flex="30">
+        <md-button class="md-primary" aria-label="description" ngf-max-size="30MB" ngf-select="uploadFiles($files)" multiple="multiple" ngf-max-files="30">Cargar archivos</md-button>
+        <md-button class="md-raised" aria-label="description" ng-click="sendFiles()">Enviar</md-button> 
+    </div>
+</div>

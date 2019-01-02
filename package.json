@@ -1,0 +1,25 @@
+{
+  "name": "angularjs_material_resources",
+  "version": "1.0.0",
+  "description": "módulo para trabajar con angularjs material, angularresources y requirejs",
+  "main": "angularmodule.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "null"
+  },
+  "keywords": [
+    "angular",
+    "material",
+    "angular",
+    "resources",
+    "spa"
+  ],
+  "author": "Cesar David Cañas Gamboa",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^4.0.0"
+  }
+}

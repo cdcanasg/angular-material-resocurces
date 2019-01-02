@@ -1,0 +1,30 @@
+<md-card layout-padding ng-if="data.length>0">
+	<md-card-title>
+		<md-card-title-text>
+			 <span class="md-headline">Observaciones de la prueba</span>
+            <span class="md-subhead" style="padding-top: 0px;">Listados de corrección</span>
+		</md-card-title-text>
+	</md-card-title>
+	<md-card-content layout-gt-md="row">
+		<div ng-repeat="obs in data" flex>
+			<div layout="row" layout-align="start center">
+				<div class="md-title" layout-align="center center">
+					{{obs.name}}
+				</div>
+				<md-button class="md-icon-button" style="color:gray;"><i class="material-icons">help</i><md-tooltip md-direction="top">{{obs.tip}}</md-tooltip></md-button>
+			</div>
+			<ul>
+				<li ng-repeat="area in obs.listadoItems">
+					<span class="md-body-1">
+						<i>{{area.name}}</i>: Preguntas (<span ng-repeat="item in area.listadoPreguntas">{{item.posicionPregunta}}{{$last?'':' - '}}</span>)
+					</span>
+				</li>
+			</ul>
+		</div>
+	</md-card-content>
+	<md-card-actions>
+		<div class="md-headline">
+			<i>Recuerda que sin estas correcciones es posible que ocurran errores en la impresión de pruebas y en la calificación de los estudiantes</i>
+		</div>
+	</md-card-actions>
+</md-card>

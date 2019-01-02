@@ -1,0 +1,9 @@
+<div layout-gt-md="row" flex layout-align="end center"  layout-padding ng-show="showData" class="show-hide-data-top">
+	<div ng-repeat="item in isolateData" layout="row">		
+		<div flex="5" layout="row" layout-padding></div>
+		<div layout="column" layout-align="center center" flex>
+			<div class="md-headline">{{item.value}}</div>
+			<div class="md-subhead" style="color: grey;">{{item.name}}</div>
+		</div>
+	</div>
+</div>

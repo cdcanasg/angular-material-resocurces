@@ -1,0 +1,12 @@
+<div layout="column" flex>
+    <md-input-container flex>
+        <label>{{label}}</label>
+        <md-select name="{{name}}" ng-model="isolateValue" ng-change="changeFunction({value:isolateValue})" ng-model-options="{trackBy:'$value.id'}"  ng-disabled="disabled" required flex multiple>
+          <md-option ng-value="opt" ng-repeat="opt in options">{{opt[showField]}}</md-option>
+        </md-select>
+        <div class="errors" ng-messages="form[name].$error">
+    		<div ng-message="required">Debes completar este campo</div>
+    		<div ng-message="md-multiple">Seleccione al menos una opción</div>
+    	</div>
+    </md-input-container>
+</div>

@@ -1,0 +1,28 @@
+<md-card layout="column" layout-padding flex md-theme="default">
+	<md-card-title flex="nogrow">
+		<md-card-title-text>
+			<div class="md-headline">{{titulo}}</div>
+			<div class="md-subhead" style="padding-top: 0px;">{{subtitulo}}</div>
+		</md-card-title-text>
+		<div ng-if="showDownload" layout-align="center center">
+            <ng-json-export-excel data="isolateData.download.data" report-fields="isolateData.download.fields" filename ="isolateData.download.filename">
+                <md-button id="download-button" class="md-icon-button" aria-label="Descargar datos">
+                    <i class="material-icons">archive</i>
+                </md-button>
+            </ng-json-export-excel>
+        </div>
+	</md-card-title>
+	<md-card-content flex layout="column">
+		<div layout="column" flex>
+			<canvas flex
+				id="line" 
+				class="chart chart-base" 
+				chart-type="isolateData.tipo" 
+				chart-data="isolateData.data"
+				chart-labels="isolateData.labels"
+				chart-series="isolateData.series"
+				chart-options="isolateData.options"
+			></canvas>
+		</div>
+	</md-card-content>
+</md-card>

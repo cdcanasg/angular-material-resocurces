@@ -1,0 +1,14 @@
+<div layout="column" flex>
+    <md-subheader id="subheader" style="padding: 0px;">
+    	{{titulo}}
+        <md-button id="button" class="md-icon-button base-rotate" tooltip="right" aria-label="{{!isolateButtonClass.value ? 'Mostrar mas...' : 'Ocultar información'}}" ng-click="setDirective()">
+		    <md-icon md-font-icon="material-icons">keyboard_arrow_up</md-icon>
+		</md-button>
+    </md-subheader>
+    
+	<div layout="column" flex>
+		<span id="base" class="bellow-base">
+	    	<span id="vanish" ng-transclude="contenido" ng-show="isolateButtonClass.value" class="bellow-vanish"></span>
+	    </span>
+    </div>
+</div>

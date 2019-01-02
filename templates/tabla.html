@@ -1,0 +1,60 @@
+<div layout-padding></div>
+<div layout="column" class="paddingContent inherit-opacity">
+    <md-toolbar class="md-primary md-hue-2 toolbarSmall" layout-gt-md="row" layout-align="start center" style="z-index: 1;">
+        <div flex="noshrink" layout-gt-md="row" layout-align="start start">{{titulo}}: {{rowsData.length}} registros</div>
+        <div flex="5"></div>
+        <md-progress-linear md-mode="indeterminate" ng-show="progressBar" flex="grow"></md-progress-linear>
+        <div flex></div>
+        <div ng-if="dataToExport.exists" layout-align="center center">
+            <ng-json-export-excel data="datosAExportar.data" report-fields="datosAExportar.fields" filename ="datosAExportar.filename">
+            <md-button class="md-icon-button">
+                <i class="material-icons">archive</i>
+                <md-tooltip md-direction="top">Exportar datos de la tabla
+            </md-button>
+            </ng-json-export-excel>
+        </div>
+        <div ng-if="isTablaFunction" layout-align="center center">
+            <md-button class="md-icon-button" ng-click="tablaFuncion()">
+                <i class="material-icons">{{tablaIcon}}</i>
+                <md-tooltip md-direction="top">{{tablaTooltip}}</md-tooltip>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-content style="max-height:25rem; display: grid;" layout="column" flex>
+        <md-subheader id="tableSubheader" layout="row" layout-align="start center" style="z-index: 1 important!; ">
+            <div flex ng-repeat="columna in columnsData" class="inline" style="width:9rem;text-align: center;">
+                {{columna.value}}
+                <md-tooltip md-direction="bottom" md-autohide="true">{{columna.value}}</md-tooltip>
+            </div>
+            <!--switch-->
+            <div flex class="inline" style="width:9rem;text-align: center;">{{tituloSwitch}}
+                <md-tooltip md-direction="bottom" md-autohide="true" ng-if="showSwitchPresent">{{tituloSwitch}}</md-tooltip>
+            </div>
+            <!--Boton de accion-->
+            <div flex class="inline" style="width:9rem;text-align: center;" ng-if="isItemFunction">
+                Acción
+                <md-tooltip md-direction="bottom" md-autohide="true">Acción</md-tooltip>
+            </div>
+            <span style="width: 10px;"></span>
+        </md-subheader>
+        <div layout="column">
+            <md-list-item layout="row" class="md-1-line" style="background-color: white;" ng-repeat="(key,rowData) in rowsData" ng-click="isolateFilaFuncion(key, $event)" flex>
+                <div class="md-list-item-text" layout="row" flex>
+                    <div layout="column" layout-align="center center" style="width:9rem;text-align: center;" class="itemPago textContent" ng-repeat="item in rowData">{{item.value}}</div>
+
+                    <!--switch-->
+                    <div md-theme="red" layout="column" layout-align="center center" style="width:9rem;text-align: center;" class="itemPago textContent" ng-if="showSwitchPresent">
+                        <md-switch ng-model="switchValue[key]" ng-change="isolateSwitchFuncion(key,switchValue[key])" aria-label="{{key}}" style="z-index: 0;"></md-switch>
+                    </div>
+
+                    <!--Boton de accion-->
+                    <div ng-if="isItemFunction" md-theme="dark-grey" layout-align="center center" flex="5">
+                        <md-button class="md-icon-button" ng-click="itemFuncion({row:rowData})"><md-icon md-font-icon="material-icons" style="color: gray;">{{itemIcon}}</md-icon></md-button>
+                    </div>
+                </div>
+            </md-list-item>
+        </div>
+    </md-content>
+</div>
+
+<div layout-padding></div>

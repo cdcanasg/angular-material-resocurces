@@ -1,0 +1,223 @@
+asdasdasd
+<div>
+	<md-card>
+		<md-tabs md-selected="pregunta.tabIndex">						
+			<md-tab id="tab1">
+		        <md-tab-label>Enunciado</md-tab-label>
+		        <md-tab-body>
+		        	<div layout="column" layout-padding>					        		
+			      		<div ng-bind-html="pregunta.enunciado"></div>
+		        	</div>
+		        </md-tab-body>
+		    </md-tab>
+
+		    <md-tab id="tab1">
+		        <md-tab-label>Respuestas</md-tab-label>
+		        <md-tab-body>
+		          	<div layout="column" layout-padding>					        		
+			      		<div class="md-headline">
+							respuesta: 
+							<span ng-repeat="respuesta in pregunta.respuestas" ng-if="respuesta.respuesta_correcta">
+								{{respuesta.id_respuesta}}
+							</span>
+						</div>
+						<div layout-gt-md="row" layout-padding layout-wrap>
+							<div flex-gt-md=50 ng-repeat="respuesta in pregunta.respuestas">
+								<span class="md-title">{{respuesta.id_respuesta}}. </span><span ng-bind-html="respuesta.enunciado"></span>
+							</div> 
+						</div>
+		        	</div>
+		        </md-tab-body>
+		    </md-tab>
+		    
+		    <md-tab id="tab1">
+		        <md-tab-label>Pruebas</md-tab-label>
+		        <md-tab-body>
+		          	<div layout="column" layout-padding>
+						<md-list layout-gt-md="row" layout-wrap>
+							<md-list-item class="md-3-line" flex-gt-md="50" style="background-color: {{prueba.isNew?'#FFF9C4':''}};" ng-repeat="prueba in pregunta.pruebas">
+								<div class="md-list-item-text" layout="column">
+						            <h3>{{prueba.name}}: <i>pregunta {{prueba.posicion}}</i></h3>
+						            <h4>{{prueba.institucion }}</h4>
+						            <p>{{prueba.programa}} - {{prueba.nivel}}</p>
+						        </div>
+							</md-list-item>
+						</md-list>
+		        	</div>
+		        </md-tab-body>
+		    </md-tab>
+		    
+		    <md-tab id="tab1">
+		        <md-tab-label>CP</md-tab-label>
+		        <md-tab-body>
+		          	<div layout="column" layout-padding>
+						
+						<div class="md-headline">Componentes</div>
+						<md-list layout-gt-md="column">
+							<md-list-item class="md-3-line" flex-gt-md ng-repeat="componente in pregunta.componentes">
+								<div class="md-list-item-text" layout="column">
+						            <h3>{{componente.name}}</h3>
+						            <h4>{{componente.categoria}}</h4>
+						            <p>{{componente.nivel}}</p>
+						        </div>
+							</md-list-item>
+						</md-list>
+		        	</div>
+		        </md-tab-body>
+		    </md-tab>
+
+		    <md-tab id="tab1">
+		        <md-tab-label>CT</md-tab-label>
+		        <md-tab-body>
+		          	<div layout="column" layout-padding>
+						
+						<div class="md-headline">Competencias</div>
+						<md-list layout-gt-md="column">
+							<md-list-item class="md-3-line" flex-gt-md ng-repeat="competencia in pregunta.competencias">
+								<div class="md-list-item-text" layout="column">
+						            <h3>{{competencia.name}}</h3>
+						            <h4>{{competencia.categoria}}</h4>
+						            <p>{{competencia.nivel}}</p>
+						        </div>
+							</md-list-item>
+						</md-list>
+
+		        	</div>
+		        </md-tab-body>
+		    </md-tab>
+		    
+		    <md-tab id="tab1">
+		        <md-tab-label>Texto de agrupamiento</md-tab-label>
+		        <md-tab-body>
+		        	<div layout="column" layout-padding>
+		        		<div class="md-headline" ng-bind-html="pregunta.info_enunciado_grupo.titulo"></div>	
+			      		<div ng-bind-html="pregunta.info_enunciado_grupo.enunciado"></div>
+		        	</div>
+		        </md-tab-body>
+		    </md-tab>
+
+		    <md-tab id="tab1">
+		        <md-tab-label>Comentarios</md-tab-label>
+		        <md-tab-body>
+		        	<div ng-bind-html="pregunta.esadisticas"></div>
+		        </md-tab-body>
+		    </md-tab>
+		</md-tabs>
+		<md-card-actions flex>
+			<div layout-gt-md="row" flex>
+				<div layout="row">
+					<md-menu md-offset="0 0" md-theme="blue">
+	    			 <!-- Trigger element is a md-button with an icon -->
+	        			<md-button class="md-icon-button" aria-label="Editar datos" ng-click="$mdOpenMenu()">
+		        			<i class="material-icons">more_vert</i>
+		      			</md-button>
+	        			<md-menu-content>
+	        				
+	        				<md-menu-item ng-if="pregunta.permisoEdicion">
+	        					<md-button ng-click="asociarTxAgrForm($event,pregunta,key)">
+	        						<md-icon><i class="material-icons">collections_bookmark</i></md-icon>
+	        						Asociar texto
+	    						</md-button>
+							</md-menu-item>
+	        				
+	        				<md-menu-item ng-if="pregunta.permisoEdicion">
+	        					<md-button ng-click="editarPregunta($event,pregunta,key)">
+	        						<md-icon><i class="material-icons">question_answer</i></md-icon>
+	        						Editar enunciado
+	    						</md-button>
+							</md-menu-item>
+							
+							<md-menu-item ng-if="pregunta.permisoEdicion">
+	        					<md-button ng-click="editarRespuestas($event,pregunta,key)">
+	        						<md-icon><i class="material-icons">view_list</i></md-icon>
+	        						Editar respuestas
+	    						</md-button>
+							</md-menu-item>
+							
+							<md-menu-item ng-if="pregunta.permisoEdicion">
+	        					<md-button ng-click="editarCpCtForm($event,pregunta,key)">
+	        						<md-icon><i class="material-icons">view_week</i></md-icon>
+	        						Editar CP o CT
+	    						</md-button>
+							</md-menu-item>
+							
+							<md-menu-item>
+	        					<md-button ng-click="asociarPruebaForm($event,pregunta,key)">
+	        						<md-icon><i class="material-icons">equalizer</i></md-icon>
+	        						Asociar a una prueba
+	    						</md-button>
+							</md-menu-item>
+
+							<md-menu-item ng-if="pregunta.permisoEdicion && pregunta.id_grupo!=null">
+	        					<md-button ng-click="desvincularTxAgrQuery(pruebaSeleccionada,pregunta)">
+	        						<md-icon><i class="material-icons">assignment</i></md-icon>
+	        						Desvincular texto
+	    						</md-button>
+							</md-menu-item>
+							
+							<md-divider></md-divider>
+							
+							<md-menu-item>
+	        					<md-button ng-click="null">
+	        						<md-icon><i class="material-icons">help</i></md-icon>
+	        						Q&#38;A sobre esta pregunta
+	    						</md-button>
+							</md-menu-item>
+	        			</md-menu-content>
+	    			</md-menu>
+
+	    			<div flex></div>
+
+	    			<div layout="row" layout-align="center center" style="padding-right: 14px;">Pregunta {{pregunta.es_publica?'pública':'privada'}}</div>
+					<md-switch style="margin-bottom: 7px;margin-top: 7px;" ng-model="pregunta.es_publica" aria-label="Switch 1" ng-disabled="!pregunta.permisoEdicion"></md-switch>
+				</div>
+				<div flex></div>
+				<div layout="row">		
+					
+					<md-button class="md-icon-button" style="color: white; background-color:#AB47BC;" aria-label="Editar datos">
+			        	<md-tooltip md-direction="top">
+			        	  Vista previa
+			        	</md-tooltip>
+	        			<i class="material-icons">pageview</i>
+	      			</md-button>
+
+					<div style="cursor: pointer;">
+						<md-tooltip md-direction="top">
+			        		{{pregunta.area}}
+			        	</md-tooltip>
+						<img class="md-avatar" style="height: 40px;width: 40px;margin-left: 6px; margin-right:6px;" ng-src="avatar/area{{pregunta.id_area}}.jpg">
+					</div>					
+
+	    			<md-button class="md-icon-button" style="color: white; background-color: {{pregunta.id_grupo?'#03A9F4':'#9E9E9E'}};" aria-label="Editar datos">
+			        	<md-tooltip md-direction="top">
+			        		{{pregunta.id_grupo?'Posee':'Sin'}} texto de agrupamiento
+			        	</md-tooltip>
+	        			<i class="material-icons">assignment</i>
+	      			</md-button>
+	      			
+	        		<md-button class="md-icon-button" style="color: white; background-color: #FFA000;" aria-label="Editar datos">
+			        	<md-tooltip md-direction="top">
+			        		{{pregunta.propietario}}
+			        	</md-tooltip>
+	        			<i class="material-icons">copyright</i>
+	      			</md-button>
+
+	      			<md-button class="md-icon-button" style="color: white; background-color: {{pregunta.colorDificultad}};" aria-label="Editar datos">
+			        	<md-tooltip md-direction="top">
+			        		Nivel de dificultad
+			        	</md-tooltip>
+	        			{{pregunta.dificultad}}
+	      			</md-button>
+
+		        	<md-button class="md-icon-button" style="color: white; background-color: {{pregunta.permisoEdicion?'#4CAF50':'#FF5252'}};" aria-label="Editar datos">
+			        	<md-tooltip md-direction="top">
+			        	  {{pregunta.permisoEdicion?'Puedes editar':'No puedes editar'}}
+			        	</md-tooltip>
+	        			<i class="material-icons">{{pregunta.permisoEdicion?'done':'block'}}</i>
+	      			</md-button>
+	      		</div>
+      		</div>
+		</md-card-actions>
+	</md-card>
+	<div layout="row" layout-padding></div>
+</div>

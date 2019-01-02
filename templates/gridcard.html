@@ -1,0 +1,33 @@
+<md-card flex layout-padding>
+    <md-card-title>
+        <md-card-title-text>
+            <div class="md-headline">{{titulo}}</div>
+            <div class="md-subhead" style="padding-top: 0px;">{{subtitulo}}</div>
+        </md-card-title-text>
+    </md-card-title>
+    <md-card-content flex>
+        <md-grid-list
+            md-cols="1" 
+            md-cols-sm="2" 
+            md-cols-md="3" 
+            md-cols-gt-md="{{gridColumns}}"
+            md-row-height="1:1"
+            md-gutter="8px" md-gutter-gt-sm="4px" 
+        >
+
+            <md-grid-tile 
+                ng-repeat="(key,tile) in gridData"
+                ng-click="isolateFunction(key,$event)"
+                md-rowspan="1"
+                md-colspan="1"
+                md-colspan-sm="1"
+                md-colspan-xs="1"
+                class="tileGrid"
+                style="background-image: url({{tile.avatar}});"
+            >
+                <md-grid-tile-header><h3>{{tile.header}}</h3></md-grid-tile-header>
+                <md-grid-tile-footer><h3>{{tile.footer1}}</h3><h4>{{tile.footer2}}</h4></md-grid-tile-footer>
+            </md-grid-tile>
+        </md-grid-list>
+    </md-card-content>
+</md-card>

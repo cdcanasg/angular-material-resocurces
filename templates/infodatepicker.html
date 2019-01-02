@@ -1,0 +1,22 @@
+<div ng-mouseenter="data.showEdit=true" ng-mouseleave="data.showEdit=false">
+	<div ng-show="data.editMode" layout="row" layout-align="start start" flex>
+		<md-input-container flex style="margin-bottom: 0px;">
+	    	<label>{{data.tag}}</label>
+	        <md-datepicker ng-model="data.value"></md-datepicker>
+	    </md-input-container>
+	    <md-button class="md-icon-button" aria-label="Settings" ng-click="guardarCambios({data:data})">
+	        <md-tooltip>Guardar cambios</md-tooltip>
+	        <md-icon><i class="material-icons">save</i></md-icon>
+	    </md-button>
+	</div>
+    <div ng-hide="data.editMode" layout="row">
+    	<div layout="column" flex>
+	    	<div class="md-headline inline">{{data.value | date: 'fullDate'}}</div>
+			<div class="md-subhead" style="color: grey;">{{data.tag}}</div>
+		</div>
+	    <md-button ng-show="data.showEdit" class="md-icon-button" aria-label="Settings" ng-click="data.editMode=true">
+	        <md-tooltip>Editar</md-tooltip>
+	        <md-icon><i class="material-icons">mode_edit</i></md-icon>
+	    </md-button>
+	</div>
+</div>

@@ -1,0 +1,36 @@
+<md-card flex layout-padding md-theme="default">
+    <md-card-title>
+        <md-card-title-text>
+            <div class="md-headline">{{titulo}}</div>
+            <div class="md-subhead" style="padding-top: 0px;">{{subtitulo}} {{listData.length > 0 ? '(' + listData.length + ')' : '' }}</div>
+        </md-card-title-text>
+        <div layout-align="center center">
+            <ng-json-export-excel data="downloadData" report-fields="downloadFields" filename ="titulo">
+                    <md-button id="download-button" aria-label="Descargar datos" class="md-icon-button">
+                        <i class="material-icons">archive</i>
+                    </md-button>
+                </md-tooltip>
+            </ng-json-export-excel>
+        </div>
+        <span ng-transclude="plusTitle"></span>
+    </md-card-title>
+    <md-card-content flex>
+        <md-content ng-show="showDatos" class="show-data show-data-list">
+            <md-list flex style="padding-top: 0px; padding-bottom: 0px;">
+                <md-list-item flex ng-repeat="(key, item) in listData" ng-click="isolateListFunction($event, key, item)">
+                    <md-icon id="icon-element" ng-if="::item.icon.show" ng-style="::item.icon.style">{{::item.icon.name}}</md-icon>
+                    <img ng-src="{{item.avatar}}" ng-if="::setImagen.show" class="md-avatar" alt="{{item.who}}" />
+                    <div class="md-list-item-text" layout="column">
+                        <div style="margin-top: 8px;"></div>
+                        <h3>{{::item.titulo}}</h3>
+                        <h4>{{::item.subtitulo}}</h4>
+                        <p>{{::item.paragrafo}}</p>
+                        <p class="md-caption" ng-if="::mostrarParagrafo2"><i>{{::item.paragrafo2}}</i></p>
+                        <div style="margin-bottom: 8px;"></div>
+                    </div>
+                    <md-switch ng-model="switchList[key]" aria-label="Switch" ng-change="isolateSwitchFunction(switchList[key],key,item)" ng-if="::showSwitch"></md-switch>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </md-card-content>
+</md-card>

@@ -1,0 +1,17 @@
+<md-card layout="column" flex>
+	<md-subheader class="md-no-sticky">
+		{{titulo}} {{isolateList.length > 0 ? '(' + isolateList.length + ')' : '' }}
+	</md-subheader>
+	<span ng-transclude="headContent"></span>
+	<md-list class="md-dense" layout-gt-md="row" layout-wrap>
+		<md-list-item class="md-3-line" ng-repeat="item in isolateList" flex-gt-md="{{flexGtMd}}">
+			<md-icon id="icon">{{icono}}</md-icon>
+			<div class="md-list-item-text">
+				<h3>{{item.titulo}}</h3>
+				<h4>{{item.subtitulo}}</h4>
+				<p class="inline">{{item.paragrafo}}</p>
+			</div>
+		</md-list-item>
+	</md-list>
+	<div flex></div>
+</md-card>

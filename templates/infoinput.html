@@ -1,0 +1,24 @@
+<div ng-mouseenter="showEdit=true" ng-mouseleave="showEdit=false">
+	<div ng-show="editMode" layout="row" layout-align="start start">
+		<md-input-container style="margin-bottom: 0px;">
+	    	<label>{{tag}}</label>
+	        <input ng-model="data[fieldShowed]" ng-keypress="$event.keyCode===13 && updateData({data:data,field:fieldShowed})">
+	        <div ng-messages="error" ng-if="true">
+	            <div ng-message="value">{{error.mensaje}}</div>
+            </div>
+	    </md-input-container>
+	    <md-button class="md-icon-button" md-tooltip="top-left" aria-label="Guardar cambios" ng-click="updateData({data:data,field:fieldShowed})">
+	        <md-icon><i class="material-icons">save</i></md-icon>
+	    </md-button>
+	</div>
+    <div ng-hide="editMode" layout="row">
+    	<div id="fixed-text" layout="column" flex>
+	    	<div class="md-subhead inline" ng-show="dataIsDate">{{data[fieldShowed] ? data[fieldShowed] : '-' | date: 'longDate'}}</div>
+	    	<div class="md-subhead inline" ng-show="!dataIsDate">{{data[fieldShowed] ? data[fieldShowed] : '-' }}</div>
+			<div class="md-caption" style="color: grey;">{{tag}}</div>
+		</div>
+	    <md-button ng-show="showEdit && !disableEdit" md-tooltip="bottom-left" class="md-icon-button" aria-label="Editar" ng-click="editMode=true">
+	        <md-icon><i class="material-icons">mode_edit</i></md-icon>
+	    </md-button>
+	</div>
+</div>

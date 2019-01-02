@@ -1,0 +1,40 @@
+<div ng-mouseenter="showEdit=true" ng-mouseleave="showEdit=false">
+	<div ng-if="disableQueryList" ng-show="editMode" layout="row" layout-align="start start" flex>
+		<md-input-container flex>
+	    	<label>{{tag}}</label>
+	        <md-select ng-model="dataSelected">
+	            <md-option ng-repeat="option in innerOptions" ng-value="option">
+	            	{{option[optionField]}}
+	            </md-option>
+	        </md-select>
+	    </md-input-container>
+	    <md-button class="md-icon-button" md-tooltip="top-left" aria-label="Guardar cambios" ng-click="updateData({data:dataSelected,field:fieldShowed})">
+	        <md-icon><i class="material-icons">save</i></md-icon>
+	    </md-button>
+	</div>
+	<div ng-if="!disableQueryList" ng-show="editMode" layout="row">
+		<autocomplete
+		    service="{{options}}"
+		    item-seleccionado="dataSelected"
+		    icon="{name:queryOptions.icon, show:true}"
+		    placeholder="Buscar {{fieldShowed}}",
+		    search-fields="['nombre']"
+		    item-settings="{titulo: queryOptions.titulo, subtituloItem: queryOptions.subtitulo}"
+		    required
+		    flex
+		></autocomplete>
+		<md-button class="md-icon-button" md-tooltip="top-left" aria-label="Guardar cambios" ng-click="updateData({data:dataSelected,field:fieldShowed})">
+	        <md-icon><i class="material-icons">save</i></md-icon>
+	    </md-button>
+	</div>
+    <div ng-hide="editMode" layout="row">
+    	<div id="fixed-text" layout="column" flex>
+	    	<div class="md-subhead inline">{{dataSelected[optionField]}}</div>
+		    <md-progress-linear md-mode="query" ng-disabled="dataSelected" flex></md-progress-linear>
+			<div class="md-caption" style="color: grey;">{{tag}}</div>
+		</div>
+	    <md-button ng-show="showEdit && !disableEdit" class="md-icon-button" md-tooltip="bottom-left" aria-label="Editar" ng-click="editMode=true">
+	        <md-icon><i class="material-icons">mode_edit</i></md-icon>
+	    </md-button>
+	</div>
+</div>

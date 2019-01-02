@@ -1,0 +1,28 @@
+<md-autocomplete
+    md-no-cache="false"
+    md-selected-item="itemSeleccionado"
+    md-search-text-change="cambioTextoBuscado(textoBuscado)"
+    md-search-text="textoBuscado"
+    md-selected-item-change="changeFunction({item:item})"
+    md-items="item in querySearch(textoBuscado)"
+    md-item-text="item[itemSettings.titulo]"
+    md-min-length="0"
+    placeholder="{{placeholder}}"
+    md-menu-class="autocomplete-custom-template"
+    md-menu-container-class="custom-container"
+>
+    <md-item-template>
+        <span layout="row">
+            <md-icon id="icon-element" ng-if="::icon.show" ng-style="{padding: '8px'}">{{::icon.name}}</md-icon>
+            <span>
+                <span class="item-title">{{item[itemSettings.titulo]}}</span>
+                <span class="item-metadata" style="text-transform: capitalize;">{{itemSettings.subtituloItem.replace('_',' ')}}: <strong>{{item[itemSettings.subtituloItem]}}</strong></span>
+            </span>
+            <span flex></span>
+        </span>
+    </md-item-template>
+    <md-not-found>
+        No se encontraron resultados con "{{textoBuscado}}".
+        <a ng-click="notFoundAction()" ng-if="notFoundAction">{{notFoundActionText}}</a>
+    </md-not-found>
+</md-autocomplete>

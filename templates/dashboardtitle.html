@@ -1,0 +1,10 @@
+<div layout-gt-md="row" flex layout-padding>
+	<div flex>
+		<div class="md-headline" flex>{{titulo}}</div>
+		<div class="md-subhead" style="color: grey;">Dashboard</div>
+	</div>
+	<div ng-show="loadVariable" layout="column" layout-align="center center" class="show-hide-progress-bar">
+		<md-progress-circular  md-diameter="20"></md-progress-circular>
+		<div>Cargando información...</div>
+	</div>
+</div>

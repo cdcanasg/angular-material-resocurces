@@ -1,0 +1,13 @@
+   <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>{{titulo}}</h2>
+        <span flex></span>
+        <span ng-transclude="barButtons"></span>
+        <md-button class="md-icon-button" ng-click="closeDialog()" md-tooltip="bottom-left" aria-label="Cerrar ventana">
+            <md-icon md-font-icon="material-icons">clear</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>   
+    <small id="errorMsg" ng-show="error.detail" class="md-caption">{{error.detail}}</small>
+    
+

@@ -1,0 +1,170 @@
+<div layout="row" ng-if="pregunta.mostrarPregunta">
+	<div class="md-title" ng-show="pregunta.textoAgrupamiento.show">
+		Responda {{pregunta.textoAgrupamiento.unica? 'la pregunta':'las preguntas'}} {{pregunta.posicion}} {{pregunta.textoAgrupamiento.pregunta_final}} según lo enunciado a continuación:
+	</div>
+	<span flex></span>
+
+	<md-button class="md-icon-button" ng-show="pregunta.textoAgrupamiento.show" aria-label="Editar datos">
+    	<md-tooltip md-direction="bottom">
+    		{{pregunta.textoAgrupamiento.propietario}}
+    	</md-tooltip>
+		<i class="material-icons">copyright</i>
+		</md-button>
+	
+	<md-button class="md-icon-button" ng-show="pregunta.textoAgrupamiento.show"  aria-label="Editar datos">
+    	<md-tooltip md-direction="bottom">
+    	  {{pregunta.textoAgrupamiento.permisoEdicion? 'Puedes editar':'No puedes editar'}}
+    	</md-tooltip>
+		<i class="material-icons">{{pregunta.textoAgrupamiento.permisoEdicion? 'done':'block'}}</i>
+		</md-button>
+	
+	<md-menu md-offset="0 0" md-theme="blue" ng-show="pregunta.textoAgrupamiento.show">           			
+		<md-button class="md-icon-button" aria-label="Editar datos" ng-click="$mdOpenMenu()">
+			<i class="material-icons">more_vert</i>
+			</md-button>
+		
+		<md-menu-content>
+			
+			<md-menu-item ng-if="pregunta.textoAgrupamiento.permisoEdicion">
+				<md-button ng-click="editarTxAgr($event,pregunta.textoAgrupamiento,key)">
+					<md-icon><i class="material-icons">question_answer</i></md-icon>
+					Editar enunciado de agrupamiento
+				</md-button>
+			</md-menu-item>
+			
+			<md-divider ng-if="pregunta.textoAgrupamiento.permisoEdicion"></md-divider>
+			
+			<md-menu-item>
+				<md-button ng-click="null">
+					<md-icon><i class="material-icons">help</i></md-icon>
+					Q&#38;A sobre este grupo de preguntas
+				</md-button>
+			</md-menu-item>
+
+		</md-menu-content>
+	</md-menu>
+
+</div>
+<div></div>
+<div class="md-headline" ng-bind-html="pregunta.textoAgrupamiento.info.titulo" ng-if="pregunta.mostrarPregunta"></div>
+<div ng-bind-html="pregunta.textoAgrupamiento.info.enunciado" ng-if="pregunta.mostrarPregunta"></div>
+<md-card ng-if="pregunta.mostrarPregunta">
+	<md-card-header>
+    	
+    	<md-card-avatar>
+        	<img class="md-user-avatar" ng-src="avatar/area{{pregunta.id_area}}.jpg"/>
+      	</md-card-avatar>
+      	
+      	<md-card-header-text>
+        	<span class="md-title">Pregunta {{pregunta.posicion}}: {{pregunta.area}}</span>
+        	<span class="md-subhead" ng-show="subheadActive">{{pruebaSeleccionada.name}} - {{pregunta.es_publica? 'Pregunta pública': 'pregunta privada'}}</span>
+    	</md-card-header-text>
+    	
+    	<md-button class="md-icon-button" style="color: white; background-color: #FFA000;" aria-label="Editar datos">
+        	<md-tooltip md-direction="bottom">
+        		{{pregunta.propietario}}
+        	</md-tooltip>
+			<i class="material-icons">copyright</i>
+			</md-button>
+
+			<md-button class="md-icon-button" style="color: white; background-color: {{pregunta.colorDificultad}};" aria-label="Editar datos">
+        	<md-tooltip md-direction="bottom">
+        		Nivel de dificultad: {{pregunta.dificultad}}
+        	</md-tooltip>			        			
+			<i class="material-icons">trending_up</i>
+			</md-button>
+
+    	<md-button class="md-icon-button" style="color: white; background-color: {{pregunta.permisoEdicion || pregunta.cambiarOrR? '#4CAF50':'#FF5252'}};" aria-label="Editar datos">
+        	<md-tooltip md-direction="bottom">
+        	  {{pregunta.permisoEdicion || pregunta.cambiarOrR? 'Puedes editar':'No puedes editar'}}
+        	</md-tooltip>
+			<i class="material-icons">{{pregunta.permisoEdicion? 'done':'block'}}</i>
+			</md-button>
+
+		<md-menu md-offset="0 0" md-theme="blue">
+		 <!-- Trigger element is a md-button with an icon -->
+			<md-button class="md-icon-button" aria-label="Editar datos" ng-click="$mdOpenMenu()">
+    			<i class="material-icons">more_vert</i>
+  			</md-button>
+			<md-menu-content>
+				
+				<md-menu-item ng-if="pregunta.permisoEdicion">
+					<md-button ng-click="editarPregunta($event,pregunta,key)">
+						<md-icon><i class="material-icons">question_answer</i></md-icon>
+						Editar enunciado
+					</md-button>
+				</md-menu-item>
+				
+				<md-menu-item ng-if="pregunta.permisoEdicion || pregunta.cambiarOrR">
+					<md-button ng-click="editarRespuestas($event,pregunta,key)">
+						<md-icon><i class="material-icons">settings_input_component</i></md-icon>
+						Editar respuestas
+					</md-button>
+				</md-menu-item>
+				
+				<md-menu-item ng-if="pregunta.permisoEdicion">
+					<md-button ng-click="editarCpCtForm($event,pregunta,key)">
+						<md-icon><i class="material-icons">view_week</i></md-icon>
+						Editar CP o CT
+					</md-button>
+				</md-menu-item>
+
+				<md-menu-item ng-if="pregunta.permisoEdicion || pregunta.cambiarOrR">
+					<md-button ng-click="desvincularPreguntaQuery(pruebaSeleccionada,pregunta)">
+						<md-icon><i class="material-icons">delete_sweep</i></md-icon>
+						Desvincular de prueba
+					</md-button>
+				</md-menu-item>
+
+				<md-menu-item ng-if="pregunta.permisoEdicion && pregunta.id_grupo!=null">
+					<md-button ng-click="desvincularTxAgrQuery(pruebaSeleccionada,pregunta)">
+						<md-icon><i class="material-icons">assignment</i></md-icon>
+						Desvincular texto
+					</md-button>
+				</md-menu-item>
+
+				<md-divider ng-if="pregunta.permisoEdicion || pregunta.cambiarOrR"></md-divider>
+				<md-menu-item>
+					<md-button ng-click="crearComentario($event,pregunta,key)" ng-if="pregunta.permisoEdicion || pregunta.cambiarOrR">
+						<md-icon><i class="material-icons">help</i></md-icon>
+						Comenta esta pregunta
+					</md-button>
+					<md-button ng-click="null" ng-if="!pregunta.permisoEdicion && !pregunta.cambiarOrR">
+						<md-icon><i class="material-icons">help</i></md-icon>
+						No tienes ningún permiso de edición
+					</md-button>
+				</md-menu-item>
+			</md-menu-content>
+		</md-menu>
+    </md-card-header>
+	<md-card-content>
+		<p ng-bind-html="pregunta.enunciado"></p>
+		<h3 class="md-title">
+			respuesta: 
+			<span ng-repeat="(key,respuesta) in pregunta.respuestas | orderBy:'orden_letra'" ng-if="respuesta.respuesta_correcta">
+				{{respuesta.orden_letra}}
+			</span>
+		</h3>
+	<div layout-gt-md="row" layout-padding layout-wrap>
+		<div flex-gt-md=50 ng-repeat="respuesta in pregunta.respuestas">
+			{{respuesta.orden_letra}}
+			<!--Se muestra help si el orden_letra es vacio-->
+			<i ng-if="respuesta.orden_letra==''" class="material-icons" style="color:#d32f2f;">
+				help
+				<md-tooltip>Configura una letra:A,B,C,D</md-tooltip>
+			</i>.
+			<span ng-bind-html="respuesta.enunciado" ng-if="respuesta.enunciado!='' || respuesta.enunciado!=' '"></span>
+			<!--Se muestra help si el enunciado es vacio-->
+			<i ng-if="respuesta.enunciado=='' || respuesta.enunciado==' '" class="material-icons" style="color:#d32f2f;">
+				help
+				<md-tooltip>Enunciado vacío</md-tooltip>
+			</i>
+		</div>
+	</div>
+	</md-card-content>
+	<md-card-actions layout="row" layout-align="end center">
+      	<md-button class="md-accent" ng-click="showCpCt($event,pregunta,'#CpCt')">
+      		Componente y competencia
+      	</md-button>
+    </md-card-actions>
+</md-card>

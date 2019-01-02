@@ -1,0 +1,17 @@
+<span layout="row" flex>
+    <md-input-container flex ng-if="!showTextArea">
+        	<label>{{label}}</label>
+        	<input id="input-element" type="{{tipo}}" ng-model="value" name="{{nameInput}}" ng-change="setValue(value)" required flex>
+        	<div ng-messages="form[nameInput].$error">
+        		<div ng-message="required">Debes completar este campo</div>
+        	</div>
+    </md-input-container>
+    <md-input-container flex ng-if="showTextArea">
+        	<label>{{label}}</label>
+        	<textarea id="text-area" type="{{tipo}}" ng-model="value" name="{{nameArea}}" rows="5" ng-change="setValue(value)" required flex></textarea>
+        	<div ng-messages="form[nameArea].$error">
+        		<div ng-message="required">Debes completar este campo</div>
+                <div ng-message="md-maxlength">No puede escribir mas de 280 caracteres</div>
+        	</div>
+    </md-input-container>
+</span>
