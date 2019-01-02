@@ -1,4 +1,4 @@
-if (window.location.host==localhost) {
+if (window.location.hostname==localhost) {
     var base_cdn = '/base';
 }else{
     var base_cdn = 'https://cdn.jsdelivr.net/gh/cdcanasg/angularjs-material-resources@' + base_cdn_version;    
