@@ -1,4 +1,3 @@
-var base_cdn_version = 'master';
 if (window.location.host==localhost) {
     var base_cdn = '/base';
 }else{
