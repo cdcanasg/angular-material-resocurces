@@ -107,7 +107,7 @@ define(['myApp'], function(myApp){
                         var menu = [];
                         var deferred = $q.defer();
                         var promise = deferred.promise;
-                        DML.save({client:client, group:currentApp},'funservir.client.routers',false).then(function(response){
+                        DML.save({client:client, group:currentApp}, client + '.client.routers',false).then(function(response){
                             routers = response.routers;
                             logo = routers.logo
                             angular.forEach(routers.paths,function(val,key){

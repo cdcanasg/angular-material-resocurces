@@ -222,7 +222,7 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
                 var preRoute = $location.path().substring(1,$location.path().indexOf('main/'));
                 var postRoute = $location.path().substring($location.path().indexOf('/main'));
                 var groupName = groups[0].name;
-                var client = 'shire';
+                var client = global_app_owner;
                 var urlBase = '';
                 angular.forEach(groups,function(val, key){
                     if(val.name==preRoute){
@@ -231,8 +231,8 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
                 });
 
                 user.currentApp = groupName;
-                urlBase = '/' + client + '/' + 'main';
-                $location.path('/' + global_app_owner + '/main');
+                urlBase = '/' + client + '/';
+                $location.path(urlBase);
                 //Configura la aplicacion actual, registra las vistas en los routeProvider y retorna la lista de menus
                 require(['static/' + client + '/js/services/factories.js'],function(){
                     appMenu.setRouters(client,groupName).then(function(menu){
@@ -240,7 +240,7 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
                         user.menu = menu;
                         DML.save({client: client},'' + global_app_owner + '.client.endpoints',false).then(function(response){
                             DML.updateAPI(response.api);
-                            deferred.resolve({'url': urlBase + '/' + groupName});
+                            deferred.resolve({'url': urlBase + groupName});
                         });
                     });
                 });
