@@ -84,7 +84,7 @@ define(['myApp'], function(myApp){
         .config(['$resourceProvider',function($resourceProvider) {
             $resourceProvider.defaults.stripTrailingSlashes = false;
         }])
-        .config(['routeResolverProvider','$controllerProvider','$compileProvider', '$filterProvider', '$provide','$routeProvider',function(routeResolverProvider,$controllerProvider,$compileProvider, $filterProvider, $provide,$routeProvider) {
+        .config(['$mdIconProvider','routeResolverProvider','$controllerProvider','$compileProvider', '$filterProvider', '$provide','$routeProvider',function($mdIconProvider, routeResolverProvider,$controllerProvider,$compileProvider, $filterProvider, $provide,$routeProvider) {
             var routeProviderApp = function(location, route){
                 $routeProvider.when(location, routeResolverProvider.route.resolve(route));
             };
@@ -95,7 +95,8 @@ define(['myApp'], function(myApp){
                 filter: $filterProvider.register,
                 factory: $provide.factory,
                 service: $provide.service,
-                route: routeProviderApp
+                route: routeProviderApp,
+                icon: $mdIconProvider.icon
             };
             
             myApp.register.factory('appMenu', ['$q','DML', function($q,DML){
