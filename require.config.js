@@ -1,7 +1,9 @@
 if (window.location.hostname==localhost) {
-    var base_cdn = 'base';
+    var base_cdn = 'static/' + global_app_owner + '/js/base/';
+    var base_directive_templates = base_cdn + 'templates/';
 }else{
-    var base_cdn = 'https://cdn.jsdelivr.net/gh/cdcanasg/angularjs-material-resources@' + base_cdn_version;    
+    var base_cdn = 'https://cdn.jsdelivr.net/gh/cdcanasg/angularjs-material-resources@' + base_cdn_version + '/';
+    var base_directive_templates = base_cdn + '/templates/';
 }
 
 var global_api_definition = {};
@@ -19,7 +21,6 @@ global_api_definition[global_app_owner] = {
 
 moment.locale('es');
 require.config({
-    baseUrl: 'static/' + global_app_owner + '/js',
     paths:{
         'angular':['//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular'],
         'angularAnimate':['//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min'],
@@ -36,23 +37,23 @@ require.config({
         'chartjs': ['//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min'],
         'firebase':['//www.gstatic.com/firebasejs/3.6.6/firebase'],
         'angularfire': ['//cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min'],
-        'angularChart':[base_cdn + '/angular.chart'],
-        'ngFileUpload':[base_cdn + '/ng.file.upload'],
-        'ngExportExcel': [base_cdn + '/ng.export.excel'],
-        'angular.tinymce': [base_cdn + '/angular.tinymce'],
-        'routeResolver': [base_cdn + '/route.resolver'],
-        'myApp': [base_cdn + '/app.module'],
-        'config':[base_cdn + '/app.config'],
-        'mainRoutes': [base_cdn + '/app.routers'],
-        'navbarcontroller': [base_cdn + '/app.navbar.controller'],
-        'myAppFactories': [base_cdn + '/app.factories'],
-        'myAppDirectives': [base_cdn + '/app.directives'],
-        'latMenu': [base_cdn + '/app.latmenu.controller'],
-        'myAppResource': [base_cdn + '/app.resources'],
-        'myAppServices': [base_cdn + '/app.services'],
-        'deepmerge': [base_cdn + '/deepmerge'],
-        'prototypes':[base_cdn + '/prototypes'],
-        'appApiConfig': [base_cdn + '/app.api.config']
+        'angularChart':[base_cdn + 'angular.chart'],
+        'ngFileUpload':[base_cdn + 'ng.file.upload'],
+        'ngExportExcel': [base_cdn + 'ng.export.excel'],
+        'angular.tinymce': [base_cdn + 'angular.tinymce'],
+        'routeResolver': [base_cdn + 'route.resolver'],
+        'myApp': [base_cdn + 'app.module'],
+        'config':[base_cdn + 'app.config'],
+        'mainRoutes': [base_cdn + 'app.routers'],
+        'navbarcontroller': [base_cdn + 'app.navbar.controller'],
+        'myAppFactories': [base_cdn + 'app.factories'],
+        'myAppDirectives': [base_cdn + 'app.directives'],
+        'latMenu': [base_cdn + 'app.latmenu.controller'],
+        'myAppResource': [base_cdn + 'app.resources'],
+        'myAppServices': [base_cdn + 'app.services'],
+        'deepmerge': [base_cdn + 'deepmerge'],
+        'prototypes':[base_cdn + 'prototypes'],
+        'appApiConfig': [base_cdn + 'app.api.config']
     },shim:{
         'angular':['prototypes'],
         'deepmerge':['angular'],
