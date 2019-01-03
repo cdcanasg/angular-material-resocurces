@@ -533,7 +533,7 @@ define(['myApp'],function(myApp){
                             //Configura la opcion por defecto
                             scope.tipo = attrs.tipo ? scope.tipo : 'bar';
 
-                            var dataIsResource = typeof scope.data == 'Resource' ? true:false;
+                            var dataIsResource = scope.data && '$promise' in scope.data ? true:false;
 
                             if (dataIsResource) {
                                 scope.data.$promise.then(function(responseData){
