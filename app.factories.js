@@ -286,7 +286,10 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
                 var deferred = $q.defer();
                 var promise = deferred.promise;
                 var urlArray = route.split('.');
-                var url = 'shire/main/' + urlArray[0] + '/' + urlArray[1];
+                var redirect_client = urlArray[0];
+                var redirect_app = urlArray[1];
+                var redirect_resource = urlArray[2];
+                var url = urlArray[0] + '/' + urlArray[1] + '/' + urlArray[2];
                 if (id) {
                     url = url + '/' + id;
                 }
