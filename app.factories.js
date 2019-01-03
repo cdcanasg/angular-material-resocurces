@@ -289,7 +289,7 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
                 var redirect_client = urlArray[0];
                 var redirect_app = urlArray[1];
                 var redirect_resource = urlArray[2];
-                var url = urlArray[0] + '/' + urlArray[1] + '/' + urlArray[2];
+                var url = redirect_client + '/' + redirect_app + '/' + redirect_resource;
                 if (id) {
                     url = url + '/' + id;
                 }
