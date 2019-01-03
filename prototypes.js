@@ -103,7 +103,7 @@ Object.defineProperty(Array.prototype, 'setMonthAsString', {
 Object.defineProperty(Array.prototype, 'groupingData', {
     enumerable:false,
     writable:true,
-    value:function (groupArray,totalKey){
+    value:function (groupArray,totalKey=null){
         var data = this;
         var groupObject={};
         var combinatorio = [];
@@ -170,7 +170,8 @@ Object.defineProperty(Array.prototype, 'groupingData', {
                     indice = posicion;
                 }
             });
-            combinatorio[indice][totalKey] = combinatorio[indice][totalKey] + val[totalKey];
+            var valor_a_sumar = val[totalKey] ?val[totalKey] : 1;
+            combinatorio[indice][totalKey] = combinatorio[indice][totalKey] + valor_a_sumar;
         });
 
         return combinatorio;

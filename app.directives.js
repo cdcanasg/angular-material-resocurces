@@ -533,31 +533,43 @@ define(['myApp'],function(myApp){
                             //Configura la opcion por defecto
                             scope.tipo = attrs.tipo ? scope.tipo : 'bar';
 
-                            scope.data.$promise.then(function(newData,oldData){
-                                if (newData && newData.length>0) {
-                                    if(scope.series){
-                                        var seriesKey = Object.keys(scope.series)[0],
-                                        seriesIsPromise = '$promise' in scope.series[seriesKey] ? true : false;
+                            var dataIsResource = typeof scope.data == 'Resource' ? true:false;
 
-                                        if(seriesIsPromise){
-                                            scope.series[seriesKey].$promise.then(function(response){
-                                                var seriesObject = {};
-                                                seriesObject[seriesKey] = response;
-                                                scope.isolateData = setPlotObject(seriesObject);
-                                            });
-                                        }else{
-                                            scope.isolateData = setPlotObject(scope.series);
-                                        }        
-                                    }else{
-                                        scope.isolateData = setPlotObject();
+                            if (dataIsResource) {
+                                scope.data.$promise.then(function(responseData){
+                                        configPlotData(responseData);
+                                });
+                            }else{
+                                scope.$watch('data',function(newData){
+                                    if (newData && newData.length>0) {
+                                        configPlotData(newData);
                                     }
-                                    
-                                }
-                            });
+                                });
+                            }
+                            
 
-                            function setPlotObject(series=null){
+                            function configPlotData(responseData){
+                                if(scope.series){
+                                    var seriesKey = Object.keys(scope.series)[0],
+                                    seriesIsPromise = '$promise' in scope.series[seriesKey] ? true : false;
+
+                                    if(seriesIsPromise){
+                                        scope.series[seriesKey].$promise.then(function(response){
+                                            var seriesObject = {};
+                                            seriesObject[seriesKey] = response;
+                                            scope.isolateData = setPlotObject(responseData, seriesObject);
+                                        });
+                                    }else{
+                                        scope.isolateData = setPlotObject(responseData, scope.series);
+                                    }        
+                                }else{
+                                    scope.isolateData = setPlotObject(responseData);
+                                }    
+                            }
+
+                            function setPlotObject(responseData, series=null){
                                 var plotSettings={
-                                   data:scope.data, 
+                                   data:responseData, 
                                    options:scope.options,
                                    tipo:scope.tipo,
                                    filename:scope.titulo,
