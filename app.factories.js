@@ -312,18 +312,16 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
                 angular.forEach(APIDefinition,function(apps,client){
                     angular.forEach(apps,function(models,app){
                         angular.forEach(models,function(form,model){
-                            if(angular.isObject(form)){
                                 var modelName = client + '.' + app + '.' + model;
                                 var formPath = app + '/' + model + '.html';
                                 var formValue = {
-                                    text: form.text,
-                                    icon:form.icon,
+                                    text: model,
+                                    icon:client + ':' + app + ':' + model,
                                     form:modelName,
                                     formPath:formPath,
                                     client: client
                                 };
                                 returnObject[modelName]=formValue;
-                            }
                         });
                     })
                 })

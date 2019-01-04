@@ -2,7 +2,7 @@
     <md-list-item ng-repeat="(key, value) in isolateList" flex-gt-md="20" layout="row" layout-align="center center">
         <span flex></span>
         <md-button class="md-grid-item-content" ng-click="function({value:value,ev:$event})" style="height: 100px;">
-            <md-icon md-font-icon="material-icons md-48">{{value.icon}}</md-icon>
+            <md-icon md-svg-icon="{{value.icon}}" ng-style="{width:'36px', height:'36px'}"></md-icon>
             <div class="md-grid-text">{{value.text}}</div>
         </md-button>
         <span flex></span>
