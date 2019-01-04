@@ -38,11 +38,13 @@ define(['myApp'],function(myApp){
                     data:'=',
                     tag:'@',
                     inputFunction: '&inputFunction',
-                    error:'=',
-                    fieldShowed: '@'
+                    error: '=',
+                    fieldShowed: '@',
+                    type: '@'
                 },
                 link: function(scope, element, attrs) {
-                    scope.disableEdit = !('inputFunction' in attrs) ? true : false;
+                    element.addClass('flex');
+                    scope.disableEdit = !('enableUpdate' in attrs) ? true : false;
                     scope.editMode = false;
                     scope.showEdit = false;
                     scope.dataIsDate = false;
@@ -52,7 +54,7 @@ define(['myApp'],function(myApp){
                     
                     scope.$watch('data',function(nv, ov){
                         if(nv){
-                            if (scope.data[scope.fieldShowed] instanceof Date) {
+                            if (scope.data[scope.fieldShowed] instanceof Date || scope.type=="Date") {
                                 scope.dataIsDate = true;
                             }
                         }
@@ -86,6 +88,7 @@ define(['myApp'],function(myApp){
                 },
                 templateUrl: dtURL+'infoselect.html',
                 link:function(scope,element,attrs){
+                    element.addClass('flex');
                     scope.editButton = angular.element(element[0].querySelector('#fixed-text'));
                     scope.editButton.css('height','40px');
                     scope.disableEdit = !('enableUpdate' in attrs) ? true : false;
@@ -93,18 +96,23 @@ define(['myApp'],function(myApp){
                     scope.editMode = false;
                     scope.showEdit = false;
 
-                    scope.data.$promise.then(function(){
-                        if (scope.disableQueryList) {
-                            scope.innerOptions = DML.get(scope.options).list;
-                            scope.innerOptions.$promise.then(function(){
-                                scope.dataSelected = DML.getItemFromList({id: scope.data[scope.fieldShowed]}, scope.options);
+                    scope.$watch('data', function(nv){
+                        if(nv){
+                            scope.data.$promise.then(function(){
+                                if (scope.disableQueryList) {
+                                    scope.innerOptions = DML.get(scope.options).list;
+                                    scope.innerOptions.$promise.then(function(){
+                                        scope.dataSelected = DML.getItemFromList({id: scope.data[scope.fieldShowed]}, scope.options);
+                                    });
+                                }else{
+                                    var setObjectQuery = {};
+                                    setObjectQuery[scope.options] = {id: scope.data[scope.fieldShowed]};
+                                    scope.dataSelected = DML.get(setObjectQuery).sublist;
+                                };
                             });
-                        }else{
-                            var setObjectQuery = {};
-                            setObjectQuery[scope.options] = {id: scope.data[scope.fieldShowed]};
-                            scope.dataSelected = DML.get(setObjectQuery).sublist;
-                        };
+                        }
                     });
+                    
 
                     scope.updateData = function(params){
                         var updateObject = {};
@@ -946,7 +954,7 @@ define(['myApp'],function(myApp){
                     titulo:'@'
                 },
                 transclude:{
-                    contenido: '?bellowContent'
+                    contenido: '?contenido'
                 },
                 templateUrl:dtURL + 'bellow.html'
             }

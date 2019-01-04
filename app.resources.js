@@ -10,7 +10,7 @@ define(['myApp'],function(myApp){
             angular.forEach(RESTAPIDefinitions,function(clientAPI,client){
                 angular.forEach(clientAPI,function(models, app){
                     angular.forEach(models,function(actions,model){
-                        var actionsResources = actions ? {update: {method: 'PATCH', hasBody: true}} : null;
+                        var actionsResources = {update: {method: 'PATCH', hasBody: true}};
                         angular.forEach(actions,function(config,action){
                             config.params = {detail: action};
                             config.method = 'GET';
