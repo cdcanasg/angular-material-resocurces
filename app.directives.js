@@ -316,7 +316,7 @@ define(['myApp'],function(myApp){
                 }
             }
         })
-        .directive('cardList3Line',function(dtURL,setData){
+        .directive('cardList3Line', ['DML','dtURL','setData',function(DML,dtURL,setData){
             return {
                 restrict:'E',
                 scope:{
@@ -330,7 +330,8 @@ define(['myApp'],function(myApp){
                     switchFunction:'&',
                     claveSwitch:'=',
                     iconSettings:'=',
-                    cardFunction:'='
+                    cardFunction:'=',
+                    foreignList: '='
                 },
                 templateUrl:dtURL+'cardlist3line.html',
                 transclude:{
@@ -429,68 +430,45 @@ define(['myApp'],function(myApp){
 
                             scope.showSwitch = typeof attrs.switchFunction != 'undefined' ? true : false;
 
+                            var setResourceList = attrs.foreignList ? true : false;
+                            var dataLoadIsCompleted = false;
+                            var resourceListCompleted = false;
+                            var beginDataConfig = false;
+
+                            if(setResourceList){
+                                scope.resourceList = new Object();
+                                angular.forEach(scope.foreignList, function(val, key){
+                                    scope.resourceList[key] = DML.get(val).list;
+                                    scope.$watchCollection('resourceList.' + key, function(nv){
+                                        if (nv.$resolved) {
+                                            var allresolved = true;
+                                            angular.forEach(scope.resourceList, function(val2){
+                                                if(!val2.$resolved){
+                                                    allresolved = false;
+                                                }
+                                            });
+                                            if(allresolved){
+                                                resourceListCompleted = true;
+                                                if (dataLoadIsCompleted) {
+                                                    configureData(scope.data);
+                                                }
+                                            }
+                                        }
+                                    });
+                                });
+                            }
+
                             scope.$watchCollection('data', function(newData){
                                 if (newData && newData.length>0) {
-                                    scope.downloadFields = {};
-                                    scope.downloadData = [];
-                                    scope.downloadData = newData;
-                                    angular.forEach(newData[0],function(val,key){
-                                        scope.downloadFields[key] = key;
-                                    });
-                                    scope.listData = [];
-                                    scope.switchList = [];
-                                    angular.forEach(newData, function(value,key){
-                                        var listElement={};
-                                        angular.forEach(scope.settings, function(dataKey,listKey){
-                                            if (listKey=='avatar') {
-                                                dataItem = setData.getUrlBlob(value[dataKey]);
-                                                scope.setImagen.show = true;
-                                            }else{
-                                                var dataItem = value[dataKey];
-                                            }
-                                            if (listKey=='paragrafo2') {
-                                                scope.mostrarParagrafo2=true;
-                                            }
-                                            listElement[listKey]=dataItem;
-                                        });
-                                        //Configura el icono de los items de la lista
-                                        if (iconIsSet){
-                                            var iconCondition = value[iconKey];
-                                            if(iconConfigType=='value'){
-                                                angular.forEach(scope.iconSettings[iconKey].items,function(val,key){
-                                                    if (val==iconCondition) {
-                                                        iconConfigPosition = key;
-                                                    }
-                                                });
-                                            }else if(iconConfigType=='interval'){
-                                                iconConfigPosition = iconIntervalMode=='up' ? 0 : numberOfConditions;
-                                                var iconPositionIsSet = false;
-                                                angular.forEach(scope.iconSettings[iconKey].items,function(val,key){
-                                                    if (iconCondition<val && !iconPositionIsSet) {
-                                                        iconPositionIsSet = true;
-                                                        iconConfigPosition = iconIntervalMode=='up' ? numberOfConditions - key : key;
-                                                    }
-                                                });
-                                            }
-                                            listElement.icon = iconConfig[iconConfigPosition];
-                                            listElement.icon.show = true;
+                                    if (!setResourceList) {
+                                        configureData(newData);
+                                    }else{
+                                        dataLoadIsCompleted = true;
+                                        if(resourceListCompleted){
+                                            configureData(newData);
                                         }
-                                        else if(scope.setIcon.show) {
-                                            listElement.icon = {
-                                                'name':scope.setIcon.name,
-                                                'show': scope.setIcon.show
-                                            };
-                                        }
-                                        scope.listData.push(listElement);
-
-                                        if (value[switchKey] == switchValue && scope.showSwitch) {
-                                            scope.switchList.push(true);
-                                        }else{
-                                            scope.switchList.push(false);
-                                        }    
-                                    });
+                                    }
                                 }
-                                
                             });
 
                             scope.isolateListFunction = function($event, key, item){
@@ -503,11 +481,79 @@ define(['myApp'],function(myApp){
                                 scope.switchFunction({state:state,item:returnObject});
 
                             };
+
+                            function configureData(originalData){
+                                var newData = angular.copy(originalData);
+                                scope.downloadFields = {};
+                                scope.downloadData = [];
+                                scope.downloadData = newData;
+                                angular.forEach(newData[0],function(val,key){
+                                    scope.downloadFields[key] = key;
+                                });
+                                scope.listData = [];
+                                scope.switchList = [];
+                                angular.forEach(newData, function(value,key){
+                                    //Configuracion de resources
+                                    if (setResourceList) {
+                                        angular.forEach(scope.resourceList, function(val2, key2){
+                                            value[key2] = DML.getItemFromList({id:value[key2]}, val2).nombre;
+                                        });
+                                    }
+                                    var listElement={};
+                                    angular.forEach(scope.settings, function(dataKey,listKey){
+                                        if (listKey=='avatar') {
+                                            dataItem = setData.getUrlBlob(value[dataKey]);
+                                            scope.setImagen.show = true;
+                                        }else{
+                                            var dataItem = value[dataKey];
+                                        }
+                                        if (listKey=='paragrafo2') {
+                                            scope.mostrarParagrafo2=true;
+                                        }
+                                        listElement[listKey]=dataItem;
+                                    });
+                                    //Configura el icono de los items de la lista
+                                    if (iconIsSet){
+                                        var iconCondition = value[iconKey];
+                                        if(iconConfigType=='value'){
+                                            angular.forEach(scope.iconSettings[iconKey].items,function(val,key){
+                                                if (val==iconCondition) {
+                                                    iconConfigPosition = key;
+                                                }
+                                            });
+                                        }else if(iconConfigType=='interval'){
+                                            iconConfigPosition = iconIntervalMode=='up' ? 0 : numberOfConditions;
+                                            var iconPositionIsSet = false;
+                                            angular.forEach(scope.iconSettings[iconKey].items,function(val,key){
+                                                if (iconCondition<val && !iconPositionIsSet) {
+                                                    iconPositionIsSet = true;
+                                                    iconConfigPosition = iconIntervalMode=='up' ? numberOfConditions - key : key;
+                                                }
+                                            });
+                                        }
+                                        listElement.icon = iconConfig[iconConfigPosition];
+                                        listElement.icon.show = true;
+                                    }
+                                    else if(scope.setIcon.show) {
+                                        listElement.icon = {
+                                            'name':scope.setIcon.name,
+                                            'show': scope.setIcon.show
+                                        };
+                                    }
+                                    scope.listData.push(listElement);
+
+                                    if (value[switchKey] == switchValue && scope.showSwitch) {
+                                        scope.switchList.push(true);
+                                    }else{
+                                        scope.switchList.push(false);
+                                    }    
+                                });
+                            }
                         }
                     }
                 }
             }
-        })
+        }])
         .directive('plotCard',['dtURL','plot',function(dtURL,plot){
             return {
                 restrict:'E',
