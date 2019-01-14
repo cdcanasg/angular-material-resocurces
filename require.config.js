@@ -19,7 +19,6 @@ global_api_definition[global_app_owner] = {
     }
 };
 
-moment.locale('es');
 require.config({
     paths:{
         'angular':['//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular'],
@@ -89,6 +88,7 @@ require.config({
 
 
 require(['navbarcontroller'],function function3(){
+    moment.locale('es');
     var cargando = document.getElementById('cargando-div');
     var nav_bar = document.getElementById('nav-bar-div');
     var lat_menu = document.getElementById('lat-menu-div');
