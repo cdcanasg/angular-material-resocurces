@@ -33,11 +33,6 @@ define(['myApp'], function(myApp){
             }
         )
         .config(['$provide','$locationProvider',function ($provide,$locationProvider) {
-            
-            $provide.decorator('dtURL', ['$delegate','$location', function($delegate,$location) {
-                var baseRoute = $location.protocol() +'://' + $location.host() + ':' + $location.port() + '/';
-                return baseRoute + $delegate;
-            }]);
             $provide.decorator('$http', ['$delegate', '$localStorage', function($delegate, $localStorage){
                 $delegate.defaults.headers.common['Authorization'] =  $localStorage.JWT;
                 $delegate.defaults.headers.common["Accept-Language"] = 'es-es';

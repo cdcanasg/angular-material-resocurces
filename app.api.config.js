@@ -2,7 +2,7 @@
 
 define(['myApp'],function(myApp){
     myApp
-        .value('dtURL','https://cdn.jsdelivr.net/gh/cdcanasg/angularjs-material-resources@master/templates/')
-        .value('DRFAPIDefinitions',global_api_definition)
+        .value('dtURL', base_directive_templates)
+        .value('DRFAPIDefinitions', global_api_definition)
     ;    
 })
