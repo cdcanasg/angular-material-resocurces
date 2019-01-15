@@ -64,6 +64,12 @@ define(['myApp'], function(myApp){
                 return m.isValid() ?  fecha : '';
             };
         }])
+        .config(['$sceDelegateProvider', function($sceDelegateProvider){
+            $sceDelegateProvider.resourceUrlWhitelist([
+                'self',
+                'base_cdn' + '**'
+            ]);
+        }])
         .config(['$mdIconProvider','$httpProvider', function($mdIconProvider,$httpProvider) {
             $httpProvider.defaults.xsrfHeaderName='X-CSRFToken';
             //registro de íconos externos
