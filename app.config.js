@@ -67,7 +67,7 @@ define(['myApp'], function(myApp){
         .config(['$sceDelegateProvider', function($sceDelegateProvider){
             $sceDelegateProvider.resourceUrlWhitelist([
                 'self',
-                'base_cdn' + '**'
+                base_cdn + '**'
             ]);
         }])
         .config(['$mdIconProvider','$httpProvider', function($mdIconProvider,$httpProvider) {
