@@ -64,11 +64,12 @@ define(['myApp'], function(myApp){
                 return m.isValid() ?  fecha : '';
             };
         }])
-        .config(['$sceDelegateProvider', function($sceDelegateProvider){
+        .config(['$templateRequestProvider','$sceDelegateProvider', function($templateRequestProvider, $sceDelegateProvider){
             $sceDelegateProvider.resourceUrlWhitelist([
                 'self',
-                base_cdn + '**'
+                base_directive_templates + '**'
             ]);
+            $templateRequestProvider.httpOptions({'headers': {'authorization': undefined}});
         }])
         .config(['$mdIconProvider','$httpProvider', function($mdIconProvider,$httpProvider) {
             $httpProvider.defaults.xsrfHeaderName='X-CSRFToken';
