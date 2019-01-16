@@ -3,7 +3,7 @@ if (window.location.hostname==localhost) {
     var base_directive_templates = base_cdn + 'templates/';
 }else{
     var base_cdn = 'https://cdn.jsdelivr.net/gh/cdcanasg/angularjs-material-resources@' + base_cdn_version + '/';
-    var base_directive_templates = base_cdn + '/templates/';
+    var base_directive_templates = base_cdn + 'templates/';
 }
 
 var global_api_definition = {};

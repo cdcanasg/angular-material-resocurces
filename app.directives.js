@@ -84,7 +84,8 @@ define(['myApp'],function(myApp){
                     queryOptions:'=',
                     error:'=',
                     fieldShowed: '@',
-                    optionField:'@'
+                    optionField:'@',
+                    optionFilter:'='
                 },
                 templateUrl: dtURL+'infoselect.html',
                 link:function(scope,element,attrs){
@@ -100,7 +101,18 @@ define(['myApp'],function(myApp){
                         if(nv){
                             scope.data.$promise.then(function(){
                                 if (scope.disableQueryList) {
-                                    scope.innerOptions = DML.get(scope.options).list;
+                                    if(!scope.optionFilter){
+                                        scope.innerOptions = DML.get(scope.options).list;
+                                    }else{
+                                        var resourcePointer = {},
+                                        optionFilterKey =Object.keys(scope.optionFilter)[0],
+                                        optionFilterValue = scope.optionFilter[optionFilterKey];
+
+                                        resourcePointer[scope.options]={};
+                                        resourcePointer[scope.options][optionFilterValue] = scope.data[optionFilterKey];
+                                        scope.innerOptions = DML.get(resourcePointer).sublist;
+                                    }
+                                    
                                     scope.innerOptions.$promise.then(function(){
                                         scope.dataSelected = DML.getItemFromList({id: scope.data[scope.fieldShowed]}, scope.options);
                                     });
