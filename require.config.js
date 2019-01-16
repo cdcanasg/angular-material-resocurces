@@ -1,11 +1,10 @@
 if (window.location.hostname==localhost) {
     var base_cdn = 'static/' + global_app_owner + '/js/base/';
-    var base_directive_templates = 'https://cdn.jsdelivr.net/gh/cdcanasg/angularjs-material-resources@' + base_cdn_version + '/' + 'templates/';
 }else{
     var base_cdn = 'https://cdn.jsdelivr.net/gh/cdcanasg/angularjs-material-resources@' + base_cdn_version + '/';
-    var base_directive_templates = base_cdn + 'templates/';
 }
 
+var base_directive_templates = base_cdn + 'templates/';
 var global_api_definition = {};
 global_api_definition[global_app_owner] = {
     'auth':{
