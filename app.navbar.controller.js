@@ -7,10 +7,11 @@ define(['myApp'],function(myApp){
             $scope.tema = 'default';
             $scope.appTitle= 'Shire';
             
-            
-            $scope.$on('$locationChangeStart',function(ev,nv,ov){
-                $templateCache.removeAll();
-            });
+            if ($location.host()=='127.0.0.1') {
+                $scope.$on('$locationChangeStart',function(ev,nv,ov){
+                    $templateCache.removeAll();
+                });
+            }
             
 
             $scope.$on('$locationChangeSuccess',function(ev,nv,ov){

@@ -8,11 +8,13 @@ define(['myApp'],function(myApp){
                 'scope':{
                     'service': '@',
                     'itemSeleccionado': '=',
-                    'icon': '=',
+                    'icon': '@',
                     'placeholder': '@',
                     'changeFunction':"&changeFunction",
                     'searchFields': "=",
-                    'itemSettings': '='
+                    'itemSettings': '=',
+                    'notFoundAction': '=',
+                    'notFoundActionText': '@'
                 },
                 'compile': function(element,attrs){
                     return {
