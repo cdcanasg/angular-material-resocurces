@@ -129,14 +129,18 @@ define(['myApp'],function(myApp){
                     
 
                     scope.updateData = function(params){
-                        var updateObject = {};
-                        scope.data[params.field] = params.data.id;
-                        scope.data.$update().then(function(response){
-                            if(response.$resolved){
-                                scope.editMode = false;
-                                scope.dataSelected = params.data;
-                            }
-                        });
+                        if (params.data!=null) {
+                            var updateObject = {};
+                            scope.data[params.field] = params.data.id;
+                            scope.data.$update().then(function(response){
+                                if(response.$resolved){
+                                    scope.editMode = false;
+                                    scope.dataSelected = params.data;
+                                }
+                            });
+                        }else{
+                            scope.editMode = false;
+                        }
                     };
                 }
             }
