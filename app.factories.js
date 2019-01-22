@@ -427,7 +427,10 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
             return forms;
         }])
         .factory('views', ['$q', function($q){
-            var views = {};
+            var views = {},
+            view_theme = 'default',
+            theme_defer = $q.defer();
+
             views.getInclude = function(include){
                 var basePath = '/static/',
                 includeConfig = include.split('.'),
@@ -435,6 +438,16 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
                 
                 return path;
             };
+            views.setTheme = function(theme){
+                theme_defer.resolve(theme);
+            };
+
+            views.getTheme = function(){
+                if(theme_defer.promise.$$state.status=1){
+                    theme_defer = $q.defer();
+                }
+                return theme_defer.promise;
+            }
 
             return views;
         }])

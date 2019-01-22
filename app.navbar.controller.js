@@ -2,7 +2,7 @@
 
 define(['myApp'],function(myApp){
     myApp
-        .controller('navBarCtrl', ['$http','$mdDialog','$templateCache','$scope','user','$mdSidenav','$location','$window','dialog', function ($http,$mdDialog,$templateCache,$scope,user,$mdSidenav,$location, $window,dialog) {
+        .controller('navBarCtrl', ['views','$http','$mdDialog','$templateCache','$scope','user','$mdSidenav','$location','$window','dialog', function (views,$http,$mdDialog,$templateCache,$scope,user,$mdSidenav,$location, $window,dialog) {
             $scope.user=user;
             $scope.tema = 'default';
             $scope.appTitle= 'Shire';
@@ -21,20 +21,9 @@ define(['myApp'],function(myApp){
                     end = $location.path().length;
                 }
                 var preRoute = $location.path().substring(start,end);
-                switch(preRoute) {
-                    case 'angioedema':
-                        $scope.tema = 'red';
-                        break;
-                    case 'psp':
-                        $scope.tema = 'dark-lightgreen';
-                        break;
-                    case 'lisosomal':
-                        $scope.tema = 'dark-cyan';
-                        break;
-                    case 'shirecoord':
-                        $scope.tema = 'default';
-                        break;
-                }
+                views.getTheme().then(function(response){
+                    $scope.tema = response;
+                });
                 user.currentApp = preRoute;
                 $mdSidenav('latMenu').close();
                 $mdDialog.hide();
