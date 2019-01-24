@@ -249,6 +249,11 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
 
             user.goToApp = goToApp;
             
+            user.goToApp = function(group){
+                goToApp(group).then(function(urlObject){
+                    $location.path(urlObject.url);
+                });
+            };
 
             //Set DML.onUnathorized
             DML.onUnauthorizedError = unsetAuth;

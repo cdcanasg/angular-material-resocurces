@@ -5,7 +5,12 @@ define(['myApp'],function(myApp){
         .controller('navBarCtrl', ['views','$http','$mdDialog','$templateCache','$scope','user','$mdSidenav','$location','$window','dialog', function (views,$http,$mdDialog,$templateCache,$scope,user,$mdSidenav,$location, $window,dialog) {
             $scope.user=user;
             $scope.tema = 'default';
-            $scope.appTitle= 'Shire';
+            $scope.appTitle = user.client;
+            $scope.userIsReady = false;
+
+            $scope.showApps = function(fn, ev){
+                fn.open(ev);
+            };
             
             if ($location.host()=='127.0.0.1') {
                 $scope.$on('$locationChangeStart',function(ev,nv,ov){
