@@ -81,6 +81,7 @@ define(['myApp'], function(myApp){
                 .icon('evento','static/css/icons/hospital/person-with-broken-arm.svg')
                 .icon('paciente', 'static/css/icons/hospital/unhealthy-medical-condition.svg')
                 .icon('inicio','static/css/icons/hospital/medical-talk-symbol-of-rectangular-speech-bubble-with-a-cross-inside.svg')
+                .iconSet('app:icon', '');
                 ;
         }])
         .config(['$resourceProvider',function($resourceProvider) {
