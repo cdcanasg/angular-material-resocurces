@@ -201,7 +201,7 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
                 setAuth(response.token);
                 setUser(response.user);
                 DML.unauthorized = false;
-                goToApp(user.groups).then(function(response){
+                goToApp(user.groups[0]).then(function(response){
                     $location.path(response.url);
                     user.loggedIn = true;
                 });
@@ -221,8 +221,8 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
                 var promise = deferred.promise;
                 var preRoute = $location.path().substring(1,$location.path().indexOf('main/'));
                 var postRoute = $location.path().substring($location.path().indexOf('/main'));
-                var groupName = groups[0].name;
-                var client = global_app_owner;
+                var groupName = groups.name;
+                var client = groups.cliente;
                 var urlBase = '';
                 angular.forEach(groups,function(val, key){
                     if(val.name==preRoute){
@@ -246,6 +246,8 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
                 });
                 return promise;
             };
+
+            user.goToApp = goToApp;
             
 
             //Set DML.onUnathorized
@@ -272,7 +274,7 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
                 invoke_api[global_app_owner + '.auth.user'] = null;
                 DML.get(invoke_api).sublist.$promise.then(function(response){
                     setUser(response);
-                    goToApp(user.groups).then(function(response){
+                    goToApp(user.groups[0]).then(function(response){
                         $location.path(response.url);
                         user.loggedIn = true;
                         DML.unauthorized = false;
