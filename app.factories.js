@@ -246,6 +246,8 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
                 });
                 return promise;
             };
+
+            user.goToApp = goToApp;
             
             user.goToApp = function(group){
                 goToApp(group).then(function(urlObject){

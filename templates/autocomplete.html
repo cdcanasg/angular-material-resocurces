@@ -17,7 +17,10 @@
             <span>
                 <span class="item-title">{{item[itemSettings.titulo]}}</span>
                 <span class="item-metadata" style="text-transform: capitalize;">{{itemSettings.subtitulo.replace('_',' ')}}: <strong>{{item[itemSettings.subtitulo]}}</strong></span>
+
                 <div class="md-caption item-metadata" style="text-transform: capitalize;" ng-if="itemSettings.paragrafo">{{itemSettings.paragrafo.replace('_',' ')}}: <strong>{{item[itemSettings.paragrafo]}}</strong></div>
+
+                <div class="md-caption item-metadata" style="text-transform: capitalize;" ng-if="itemSettings.paragrafo2">{{itemSettings.paragrafo2.replace('_',' ')}}: <strong>{{item[itemSettings.paragrafo2]}}</strong></div>
             </span>
             <span flex></span>
         </span>
