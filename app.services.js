@@ -94,7 +94,7 @@ define(['myApp'],function(myApp){
                 });
             };
 
-            thisDMLObject.save = function(newObject, element, getList=true){
+            thisDMLObject.save = function(newObject, element, getList=false){
                 if (resource[element]) {
                     var defer = $q.defer();
                     var promise = defer.promise;
