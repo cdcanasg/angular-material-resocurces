@@ -429,7 +429,7 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
                 var key = Object.keys(date)[0];
                 assign[key] = moment(date[key]).format('YYYY-MM-DD');
             };
-            
+
             forms
             return forms;
         }])
@@ -442,11 +442,15 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
                 var basePath = '/static/',
                 includeConfig = include.split('.'),
                 path = basePath + includeConfig[0] + '/html/views/' + includeConfig[1] + '/includes/' + includeConfig[2] + '/' + includeConfig[3] +  '.html';
-                
+
                 return path;
             };
-            views.setTheme = function(theme){
-                theme_defer.resolve(theme);
+            views.setTheme = function(theme, icon=null){
+                var returnObject = {'theme': theme};
+                if(icon){
+                    returnObject.icon = icon;
+                }
+                theme_defer.resolve(returnObject);
             };
 
             views.getTheme = function(){

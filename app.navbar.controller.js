@@ -27,7 +27,15 @@ define(['myApp'],function(myApp){
                 }
                 var preRoute = $location.path().substring(start,end);
                 views.getTheme().then(function(response){
-                    $scope.tema = response;
+                    $scope.tema = response.theme;
+                    if(response.icon){
+                        user.logo.style.fill = response.icon;
+                    }else{
+                        if (user.logo) {
+                            delete user.logo.style.fill;
+                        }
+                    }
+                    
                 });
                 user.currentApp = preRoute;
                 $mdSidenav('latMenu').close();
