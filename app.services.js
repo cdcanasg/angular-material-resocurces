@@ -75,6 +75,7 @@ define(['myApp'],function(myApp){
                             serviceData[apiDefinition].sublist = resource[apiDefinition].query(property[apiDefinition]);
                         }else{
                             console.error('No existe la api: ' + apiDefinition);
+                            return {};
                         }
                     }
                     return serviceData[apiDefinition];
