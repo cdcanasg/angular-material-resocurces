@@ -71,7 +71,11 @@ define(['myApp'],function(myApp){
                         }
                         
                     }else{
-                        serviceData[apiDefinition].sublist = resource[apiDefinition].query(property[apiDefinition]);
+                        if (resource[apiDefinition]) {
+                            serviceData[apiDefinition].sublist = resource[apiDefinition].query(property[apiDefinition]);
+                        }else{
+                            console.error('No existe la api: ' + apiDefinition);
+                        }
                     }
                     return serviceData[apiDefinition];
                 }
