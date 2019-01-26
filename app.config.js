@@ -18,9 +18,10 @@ define(['myApp'], function(myApp){
                 $mdThemingProvider.theme('green').primaryPalette('green').accentPalette('green').backgroundPalette('blue-grey');
                 $mdThemingProvider.theme('greennobg').primaryPalette('blue-grey').accentPalette('green');
                 $mdThemingProvider.theme('dark-amber').primaryPalette('amber').accentPalette('amber').backgroundPalette('amber').dark();
-                $mdThemingProvider.theme('dark-lightgreen').primaryPalette('light-green').accentPalette('light-green').backgroundPalette('light-green').dark();
+                $mdThemingProvider.theme('dark-lightgreen').primaryPalette('light-green').accentPalette('light-green').dark();
                 $mdThemingProvider.theme('dark-lightblue').primaryPalette('light-blue').accentPalette('light-blue').backgroundPalette('light-blue').dark();
                 $mdThemingProvider.theme('lightgreen').primaryPalette('light-green').accentPalette('light-green').backgroundPalette('light-green');
+                $mdThemingProvider.theme('lightgreen-nobg').primaryPalette('light-green').accentPalette('light-green');
                 $mdThemingProvider.theme('dark-indigo').primaryPalette('indigo').accentPalette('indigo').backgroundPalette('indigo').dark();
                 $mdThemingProvider.theme('dark-red').primaryPalette('red').accentPalette('red').backgroundPalette('red').dark();
                 $mdThemingProvider.theme('red').primaryPalette('red').accentPalette('blue');

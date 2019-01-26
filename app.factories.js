@@ -438,11 +438,15 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
             view_theme = 'default',
             theme_defer = $q.defer();
 
-            views.getInclude = function(include){
-                var basePath = '/static/',
-                includeConfig = include.split('.'),
-                path = basePath + includeConfig[0] + '/html/views/' + includeConfig[1] + '/includes/' + includeConfig[2] + '/' + includeConfig[3] +  '.html';
-
+            views.getIncludePath = function(include){
+                if(include  && include!=""){
+                    var basePath = '/static/',
+                    includeConfig = include.split('.'),
+                    path = basePath + includeConfig[0] + '/html/views/' + includeConfig[1] + '/includes/' + includeConfig[2] + '/' + includeConfig[3] +  '.html';
+                    
+                }else{
+                    path = undefined;
+                }
                 return path;
             };
             views.setTheme = function(theme, icon=null){

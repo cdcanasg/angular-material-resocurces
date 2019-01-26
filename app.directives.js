@@ -993,11 +993,11 @@ define(['myApp'],function(myApp){
 
                     scope.setDirective = function(){
                         if (!scope.isolateButtonClass.value) {
-                            baseAnimate = $animate.addClass(scope.baseSpan,'grow',{from:{height:'0px'},to:{'height':setHeight() + 'px'}});
+                            baseAnimate = $animate.addClass(scope.baseSpan,'grow',{from:{'max-height':'0px'},to:{'max-height':setHeight() + 'px'}});
                             buttonAnimate = $animate.removeClass(scope.buttonSpan,'rotate');
                             vanishAnimate = $animate.addClass(scope.vanishSpan,'show');
                         }else{
-                            baseAnimate = $animate.removeClass(scope.baseSpan,'grow', {from:{height:setHeight() + 'px'},to:{height:'0px'}});
+                            baseAnimate = $animate.removeClass(scope.baseSpan,'grow', {from:{'max-height':setHeight() + 'px'},to:{'max-height':'0px'}});
                             buttonAnimate = $animate.addClass(scope.buttonSpan,'rotate');
                             vanishAnimate = $animate.removeClass(scope.vanishSpan,'show');
                         }
