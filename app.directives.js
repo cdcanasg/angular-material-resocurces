@@ -711,18 +711,15 @@ define(['myApp'],function(myApp){
                 }
             }
         })
-        .directive('scrollButton', function ($timeout) {
+        .directive('scrollTo', function ($anchorScroll) {
             return {
                 restrict: 'A',
                 scope: {
-                    scroll: "<"
+                    'scrollTo': "@"
                 },
                 link: function (scope, element) {
-                    scope.$watchCollection('scrollBottom', function (newValue) {
-                        if (newValue)
-                        {
-                            element.context.scrollTop =  element.context.scrollHeight;
-                        }
+                    scope.$on('$includeContentLoaded', function(){
+                        $anchorScroll(scope.scrollTo);
                     });
                 }
             }
