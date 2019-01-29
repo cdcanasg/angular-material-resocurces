@@ -18,6 +18,8 @@
 
                     scope.$watch('data',function(nv, ov){
                         if (nv && nv!=ov) {
+                            fields = [];
+                            header = [];
                             scope.filename = !!scope.filename ? scope.filename : 'export-excel';
 
                             angular.forEach(scope.reportFields, function(field, key) {

@@ -491,6 +491,7 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
                 thisPlot.labelObject = {};
                 thisPlot.stringFields = [];
                 thisPlot.valueField = '';
+                thisPlot.downloadData = {};
             };
 
             thisPlot.setCleanParams();
