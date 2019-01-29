@@ -27,6 +27,7 @@ define(['myApp'],function(myApp){
                 }
                 var preRoute = $location.path().substring(start,end);
                 views.getTheme().then(function(response){
+                    views.currentTheme = response.theme;
                     $scope.tema = response.theme;
                     if(response.icon){
                         user.logo.style.fill = response.icon;
