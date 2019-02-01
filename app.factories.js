@@ -234,7 +234,7 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
                 urlBase = '/' + client + '/';
                 $location.path(urlBase);
                 //Configura la aplicacion actual, registra las vistas en los routeProvider y retorna la lista de menus
-                require(['static/' + client + '/js/services/factories.js', 'static/' + client + '/js/' + global_app_owner + '.config.js'],function(){
+                require(['static/' + client + '/js/services/factories.js', 'static/' + client + '/js/' + client + '.config.js'],function(){
                     appMenu.setRouters(client,groupName).then(function(menu){
                         user.logo = appMenu.getLogo(client,groupName);
                         user.menu = menu;
