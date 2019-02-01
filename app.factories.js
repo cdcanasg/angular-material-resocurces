@@ -232,7 +232,7 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
 
                 user.currentApp = groupName;
                 urlBase = '/' + client + '/';
-                $location.path(urlBase);
+                $location.path('/' + global_app_owner + '/');
                 //Configura la aplicacion actual, registra las vistas en los routeProvider y retorna la lista de menus
                 require(['static/' + client + '/js/services/factories.js', 'static/' + client + '/js/' + client + '.config.js'],function(){
                     if(client!=global_app_owner){
