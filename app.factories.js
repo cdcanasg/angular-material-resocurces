@@ -232,15 +232,20 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
 
                 user.currentApp = groupName;
                 urlBase = '/' + client + '/';
-                $location.path(urlBase);
+                $location.path('/' + global_app_owner + '/');
                 //Configura la aplicacion actual, registra las vistas en los routeProvider y retorna la lista de menus
-                require(['static/' + client + '/js/services/factories.js', 'static/' + client + '/js/' + global_app_owner + '.config.js'],function(){
+                require(['static/' + client + '/js/services/factories.js', 'static/' + client + '/js/' + client + '.config.js'],function(){
+                    if(client!=global_app_owner){
+                        var clientApiEnpointEntry = {};
+                        clientApiEnpointEntry[client] = {'client':{'routers': null}};
+                        DML.updateAPI(clientApiEnpointEntry);
+                    }
                     appMenu.setRouters(client,groupName).then(function(menu){
                         user.logo = appMenu.getLogo(client,groupName);
                         user.menu = menu;
                         DML.save({client: client},'' + global_app_owner + '.client.endpoints',false).then(function(response){
                             DML.updateAPI(response.api);
-                            deferred.resolve({'url': urlBase + groupName});
+                            deferred.resolve({'url': urlBase + groupName + '/'});
                         });
                     });
                 });
