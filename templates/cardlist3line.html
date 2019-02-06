@@ -15,6 +15,19 @@
         <span ng-transclude="plusTitle"></span>
     </md-card-title>
     <md-card-content flex>
+        <md-autocomplete
+            ng-disabled="ctrl.isDisabled"
+            md-no-cache="ctrl.noCache"
+            md-selected-item="ctrl.selectedItem"
+            md-search-text-change="applyFilter(filtroTexto)"
+            md-search-text="filtroTexto"
+            md-items="item in querySearch()"
+            md-min-length="0"
+            placeholder="Filtro de la lista"
+            input-aria-labelledby="favoriteStateLabel"
+            input-aria-describedby="autocompleteDetailedDescription"
+        ></md-autocomplete>
+        <div layout-margin></div>
         <md-content ng-show="showDatos" class="show-data show-data-list">
             <md-list flex style="padding-top: 0px; padding-bottom: 0px;">
                 <md-list-item flex ng-repeat="(key, item) in listData" ng-click="isolateListFunction($event, key, item)">

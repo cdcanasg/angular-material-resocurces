@@ -334,7 +334,7 @@ define(['myApp'],function(myApp){
                 }
             }
         })
-        .directive('cardList3Line', ['DML','dtURL','setData',function(DML,dtURL,setData){
+        .directive('cardList3Line', ['$q','DML','dtURL','setData',function($q,DML,dtURL,setData){
             return {
                 restrict:'E',
                 scope:{
@@ -499,6 +499,26 @@ define(['myApp'],function(myApp){
                                 scope.switchFunction({state:state,item:returnObject});
 
                             };
+
+                            var promiseFilter = $q.defer();
+                            scope.applyFilter = function(text){
+                                var newList = new Array;
+                                angular.forEach(scope.data, function(val, key){
+                                    var coincidencia = false;
+                                    angular.forEach(val, function(item, prop){
+                                        if(!coincidencia && angular.isString(item) && item.toLowerCase().indexOf(text.toLowerCase())!=-1) {
+                                            newList.push(val);
+                                            coincidencia = true;
+                                        }
+                                    });
+                                });
+                                promiseFilter.resolve([]);
+                                configureData(newList);
+                            }
+
+                            scope.querySearch = function(){
+                                return promiseFilter.promise;
+                            }
 
                             function configureData(originalData){
                                 var newData = angular.copy(originalData);
