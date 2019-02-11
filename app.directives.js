@@ -490,7 +490,7 @@ define(['myApp'],function(myApp){
                             });
 
                             scope.isolateListFunction = function($event, key, item){
-                                var returnObject = scope.data[key];
+                                var returnObject = DML.getItemFromList({id:item.id}, scope.data);
                                 scope.listFunction({'ev':$event, 'value': returnObject});
                             };
 
@@ -538,6 +538,9 @@ define(['myApp'],function(myApp){
                                         });
                                     }
                                     var listElement={};
+                                    if (value.id) {
+                                        listElement.id = value.id;
+                                    }
                                     angular.forEach(scope.settings, function(dataKey,listKey){
                                         if (listKey=='avatar') {
                                             dataItem = setData.getUrlBlob(value[dataKey]);

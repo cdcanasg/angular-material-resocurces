@@ -312,7 +312,7 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
             return user;
         }])
 
-        .factory('forms', ['$q','routeResolver','dialog', 'DRFAPIDefinitions', function($q,routeResolver,dialog,DRFAPIDefinitions) {
+        .factory('forms', ['$resource','$q','routeResolver','dialog', 'DRFAPIDefinitions', function($resource,$q,routeResolver,dialog,DRFAPIDefinitions) {
             var forms={
                 formObject:{}
             };
@@ -435,7 +435,28 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
                 assign[key] = moment(date[key]).format('YYYY-MM-DD');
             };
 
-            forms
+            forms.uploadFile = function(data, pointer){
+                var defer = $q.defer(),
+                arrayPointer = pointer.split('.'),
+                url = 'api/' + arrayPointer[0] + '/' + arrayPointer[1] + '/' + arrayPointer[2] + '/:id/',
+                paramDefaults = {'id':'@id'},
+                actions = {
+                    'get': {method:'GET', headers: { 'Content-Type': undefined, enctype: 'application/*'}},
+                    'upload': {method:'POST', headers: { 'Content-Type': undefined, enctype: 'multipart/form-data'}}
+                },
+                formData = new FormData(),
+                
+                uploadResource = $resource(url, paramDefaults, actions);
+
+                angular.forEach(data, function(v, k){
+                    formData.append(k,v);
+                });
+                uploadResource.upload(formData, function(response){
+                    var a = response;
+                });
+
+                return defer.promise;
+            }
             return forms;
         }])
         .factory('views', ['$q', function($q){
