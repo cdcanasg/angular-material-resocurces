@@ -312,7 +312,7 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
             return user;
         }])
 
-        .factory('forms', ['$resource','$q','routeResolver','dialog', 'DRFAPIDefinitions', function($resource,$q,routeResolver,dialog,DRFAPIDefinitions) {
+        .factory('forms', ['$window','$resource','$q','routeResolver','dialog', 'DRFAPIDefinitions', function($window,$resource,$q,routeResolver,dialog,DRFAPIDefinitions) {
             var forms={
                 formObject:{}
             };
@@ -435,27 +435,54 @@ define(['myApp','deepmerge'],function(myApp,deepmerge){
                 assign[key] = moment(date[key]).format('YYYY-MM-DD');
             };
 
-            forms.uploadFile = function(data, pointer){
-                var defer = $q.defer(),
+            forms.file = function(pointer){
+                var pointer = pointer,
                 arrayPointer = pointer.split('.'),
-                url = 'api/' + arrayPointer[0] + '/' + arrayPointer[1] + '/' + arrayPointer[2] + '/:id/',
-                paramDefaults = {'id':'@id'},
+                url = 'api/' + arrayPointer[0] + '/' + arrayPointer[1] + '/' + arrayPointer[2] + '/:id/:action/',
+                paramDefaults = {'id': '@id', 'action': '@action'},
                 actions = {
-                    'get': {method:'GET', headers: { 'Content-Type': undefined, enctype: 'application/*'}},
+                    'download': {
+                        'method': 'GET',
+                        'responseType': 'blob',
+                        'params': {'action': 'download'},
+                        'headers': { 'Content-Type': undefined, enctype: 'application/*', 'Content-Disposition': 'attachment'},
+                        'transformResponse': function(data, headersGetter){
+                            return {'data': data, 'headers': headersGetter}
+                        }
+                    },
                     'upload': {method:'POST', headers: { 'Content-Type': undefined, enctype: 'multipart/form-data'}}
                 },
-                formData = new FormData(),
                 
-                uploadResource = $resource(url, paramDefaults, actions);
+                uploadResource = $resource(url, paramDefaults, actions),
 
-                angular.forEach(data, function(v, k){
-                    formData.append(k,v);
-                });
-                uploadResource.upload(formData, function(response){
-                    var a = response;
-                });
+                returnObject = {
+                    'upload': function(data){
+                        var defer = $q.defer(),
+                        formData = new FormData();
+                        angular.forEach(data, function(v, k){
+                            formData.append(k,v);
+                        });
+                        uploadResource.upload(formData, function(response){
+                            defer.resolve(response);
+                        });
+                        return defer.promise;
+                    },
+                    'get': function(id, filename=null){
+                        var defer = $q.defer();
+                        uploadResource.download({'id': id}).$promise.then(function(response){
+                            var urlBlobFile = $window.URL.createObjectURL(response.data);
+                            var aElement = angular.element('<a></a>');
+                            aElement.attr('target', '_self');
+                            aElement.attr('download', filename);
+                            aElement.attr('href', urlBlobFile);
+                            aElement[0].click();
+                            defer.resolve({'url': urlBlobFile, 'headers': response.headers, 'blob': response.data});
+                        });
+                        return defer.promise;
+                    }
+                };
 
-                return defer.promise;
+                return returnObject;
             }
             return forms;
         }])
