@@ -4,12 +4,12 @@
 	</md-subheader>
 	<span ng-transclude="headContent"></span>
 	<md-list class="md-dense" layout-gt-md="row" layout-wrap>
-		<md-list-item class="md-3-line" ng-repeat="item in isolateList" flex-gt-md="{{flexGtMd}}">
+		<md-list-item id="list-item" class="md-3-line" ng-repeat="(key, item) in isolateList" flex-gt-md="{{flexGtMd}}">
 			<md-icon id="icon">{{icono}}</md-icon>
 			<div class="md-list-item-text">
-				<h3>{{item.titulo}}</h3>
-				<h4>{{item.subtitulo}}</h4>
-				<p class="inline">{{item.paragrafo}}</p>
+				<h3 id="item-titulo">{{item.titulo}}</h3>
+				<h4 id="item-subtitulo">{{item.subtitulo}}</h4>
+				<p id="item-paragrafo" class="inline">{{item.paragrafo}}</p>
 			</div>
 		</md-list-item>
 	</md-list>

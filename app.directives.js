@@ -912,7 +912,7 @@ define(['myApp'],function(myApp){
                 }
             };
         }])
-        .directive('cardListDense', ['dtURL',function (dtURL) {
+        .directive('cardListDense', ['$parse','dtURL',function ($parse, dtURL) {
             return {
                 restrict: 'E',
                 templateUrl:dtURL + 'cardlistdense.html',
@@ -922,7 +922,8 @@ define(['myApp'],function(myApp){
                     data:'=',
                     settings:'=',
                     iconType:'=',
-                    columnas:'@'
+                    columnas:'@',
+                    listFunction: '&'
                 },
                 transclude:{
                     'headContent':'?headContent'
@@ -937,6 +938,20 @@ define(['myApp'],function(myApp){
                         icon.attr('md-svg-icon',attrs.icono);
                     }
 
+                    var settingsInCompile = $parse(attrs.settings)();
+
+                    angular.forEach(['titulo', 'subtitulo', 'paragrafo'], function(val, key){
+                        if(!settingsInCompile[val]){
+                            var textElement = angular.element(element[0].querySelector('#item-' + val));
+                            textElement.remove();
+                        }
+                    });
+
+                    if(attrs.listFunction){
+                        var listItemElement = angular.element(element[0].querySelector('#list-item'));
+                        listItemElement.attr('ng-click', "isolateListFunction({'item': item, 'key': key})");
+                    }
+
                     return {
                         post: function (scope, iElement, iAttrs) {
                             iElement.addClass('layout-column');
@@ -945,17 +960,23 @@ define(['myApp'],function(myApp){
                                 scope.flexGtMd = Math.round(100 / scope.columnas);
                             });
 
-                            scope.$watchCollection('data', function(newData){
-                                scope.isolateList=[];
-                                angular.forEach(newData, function(value,key){
-                                    var listElement={};
-                                    angular.forEach(scope.settings, function(dataKey,gridKey){
-                                        var dataItem = value[dataKey];
-                                        listElement[gridKey]=dataItem;
+                            scope.$watchCollection('data', function(nd, od){
+                                if (nd && nd!=od) {
+                                    scope.isolateList=[];
+                                    angular.forEach(nd, function(value,key){
+                                        var listElement={};
+                                        angular.forEach(scope.settings, function(dataKey,gridKey){
+                                            var dataItem = value[dataKey];
+                                            listElement[gridKey]=dataItem;
+                                        });
+                                        scope.isolateList.push(listElement);
                                     });
-                                    scope.isolateList.push(listElement);
-                                });
+                                }
                             });
+
+                            scope.isolateListFunction = function(data){
+                                scope.listFunction({'item': scope.data[data.key]});  
+                            }
                         }
                     }
                 }
