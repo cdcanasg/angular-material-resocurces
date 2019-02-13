@@ -4,7 +4,7 @@
 	</md-subheader>
 	<span ng-transclude="headContent"></span>
 	<md-list class="md-dense" layout-gt-md="row" layout-wrap>
-		<md-list-item id="list-item" class="md-3-line" ng-repeat="(key, item) in isolateList" flex-gt-md="{{flexGtMd}}">
+		<md-list-item id="list-item" ng-repeat="(key, item) in isolateList" flex-gt-md="{{flexGtMd}}">
 			<md-icon id="icon">{{icono}}</md-icon>
 			<div class="md-list-item-text">
 				<h3 id="item-titulo">{{item.titulo}}</h3>

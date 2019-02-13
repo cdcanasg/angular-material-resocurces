@@ -939,16 +939,23 @@ define(['myApp'],function(myApp){
                     }
 
                     var settingsInCompile = $parse(attrs.settings)();
-
+                    var elementNumber = 3;
                     angular.forEach(['titulo', 'subtitulo', 'paragrafo'], function(val, key){
                         if(!settingsInCompile[val]){
                             var textElement = angular.element(element[0].querySelector('#item-' + val));
                             textElement.remove();
+                            elementNumber = elementNumber - 1;
                         }
                     });
 
+                    var listItemElement = angular.element(element[0].querySelector('#list-item'));
+                    if (elementNumber>2) {
+                        listItemElement.addClass('md-3-line');
+                    }else{
+                        listItemElement.addClass('md-2-line');
+                    }
+
                     if(attrs.listFunction){
-                        var listItemElement = angular.element(element[0].querySelector('#list-item'));
                         listItemElement.attr('ng-click', "isolateListFunction({'item': item, 'key': key})");
                     }
 
